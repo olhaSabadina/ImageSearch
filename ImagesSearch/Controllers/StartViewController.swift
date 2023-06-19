@@ -29,6 +29,12 @@ class StartViewController: UIViewController {
         print("tapButtonOnTF")
     }
     
+    @objc private func openSearchResultsVC() {
+        let searchResultsVC = SearchResultsViewController()
+        let navController = UINavigationController(rootViewController: searchResultsVC)
+        navigationController?.present(navController, animated: true)
+    }
+    
     //MARK: - private func:
     
 }
@@ -142,7 +148,7 @@ extension StartViewController {
         searchButton.tintColor = .white
         searchButton.backgroundColor = .blue
         searchButton.borderColorRadius(borderWidth: 1, cornerRadius: 8, borderColor: .black)
-//            searchButton.addTarget(self, action: #selector(), for: .touchUpInside)
+        searchButton.addTarget(self, action: #selector(openSearchResultsVC), for: .touchUpInside)
         searchButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(searchButton)
     }
