@@ -8,9 +8,11 @@
 import UIKit
 
 extension UIView {
-    func borderColorRadius(borderWidth: CGFloat, cornerRadius: CGFloat, borderColor: UIColor) {
+    func setBorderLayer(backgroundColor: UIColor, borderColor: UIColor, borderWidth: CGFloat, cornerRadius: CGFloat, tintColor: UIColor?) {
+        self.backgroundColor = backgroundColor
+        layer.borderColor = borderColor.cgColor
         layer.borderWidth = borderWidth
         layer.cornerRadius = cornerRadius
-        layer.borderColor = borderColor.cgColor
+        self.tintColor = tintColor
     }
 }
