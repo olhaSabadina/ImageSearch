@@ -32,6 +32,7 @@
 		58FE33852A75708D004C577D /* LargeImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE33842A75708D004C577D /* LargeImageView.swift */; };
 		58FE33872A7570FE004C577D /* SmallCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE33862A7570FE004C577D /* SmallCollectionView.swift */; };
 		58FE338A2A7572DD004C577D /* SmallCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE33892A7572DD004C577D /* SmallCell.swift */; };
+		58FE338D2A7574E7004C577D /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE338C2A7574E7004C577D /* ImageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		58FE33842A75708D004C577D /* LargeImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeImageView.swift; sourceTree = "<group>"; };
 		58FE33862A7570FE004C577D /* SmallCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCollectionView.swift; sourceTree = "<group>"; };
 		58FE33892A7572DD004C577D /* SmallCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCell.swift; sourceTree = "<group>"; };
+		58FE338C2A7574E7004C577D /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 				58FE337B2A75639E004C577D /* StartScteen */,
 				58FE337C2A7566BC004C577D /* SearchResultScreen */,
 				58FE33802A756E9E004C577D /* DetailScreen */,
+				58FE338B2A757482004C577D /* ZoomScreen */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -220,8 +223,8 @@
 		58FE33802A756E9E004C577D /* DetailScreen */ = {
 			isa = PBXGroup;
 			children = (
-				58FE33882A7572A8004C577D /* Cell */,
 				58FE33822A75701A004C577D /* ImagePageViewController.swift */,
+				58FE33882A7572A8004C577D /* Cell */,
 				58FE33812A756F9E004C577D /* Views */,
 			);
 			path = DetailScreen;
@@ -242,6 +245,14 @@
 				58FE33892A7572DD004C577D /* SmallCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		58FE338B2A757482004C577D /* ZoomScreen */ = {
+			isa = PBXGroup;
+			children = (
+				58FE338C2A7574E7004C577D /* ImageViewController.swift */,
+			);
+			path = ZoomScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -336,6 +347,7 @@
 				584F9D532A3A4CA300E9B4BF /* SceneDelegate.swift in Sources */,
 				5849C1E32A3F36AD002F9C63 /* NetworkFetchManager.swift in Sources */,
 				58FE33872A7570FE004C577D /* SmallCollectionView.swift in Sources */,
+				58FE338D2A7574E7004C577D /* ImageViewController.swift in Sources */,
 				58FE337A2A75635C004C577D /* CompositionalLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
