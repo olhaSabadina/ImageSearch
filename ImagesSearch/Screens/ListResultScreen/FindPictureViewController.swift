@@ -12,7 +12,7 @@ class FindPictureViewController: UIViewController {
     var typeImageFind: TypeEnum = .all
     private let topView = TopView()
     private let imageCell = ImageCell()
-    private let networkManager = NetworkFetchManager()
+    private let networkManager = NetworkManager()
     private var sortType: SortByEnum = .none
     private var collectionView : UICollectionView! = nil
     private var imagesDescription: ImagesData? = nil
@@ -88,28 +88,28 @@ class FindPictureViewController: UIViewController {
     }
     
     private func interactiveSortMenu(sortetBy: String? = nil) -> UIMenu {
-        let downloadsAction = UIAction(title: SortByEnum.downloads.labelMenu, image: IconsEnum.downloadMenuImage) { action in
+        let downloadsAction = UIAction(title: SortByEnum.downloads.labelMenu, image: ImagesEnum.downloadMenuImage) { action in
             self.hitsArray?.sort(by: { downloadOne, downloadTwo in
                 downloadOne.downloads > downloadTwo.downloads
             })
             self.sortType = .downloads
             self.topView.sortedButton.menu = self.interactiveSortMenu(sortetBy: action.title)
         }
-        let likesAction = UIAction(title: SortByEnum.likes.labelMenu, image: IconsEnum.likesMenuImage) { action in
+        let likesAction = UIAction(title: SortByEnum.likes.labelMenu, image: ImagesEnum.likesMenuImage) { action in
             self.hitsArray?.sort(by: { likesOne, likesTwo in
                 likesOne.likes > likesTwo.likes
             })
             self.sortType = .likes
             self.topView.sortedButton.menu = self.interactiveSortMenu(sortetBy: action.title)
         }
-        let viewsAction = UIAction(title: SortByEnum.views.labelMenu, image: IconsEnum.viewMenuImage) { action in
+        let viewsAction = UIAction(title: SortByEnum.views.labelMenu, image: ImagesEnum.viewMenuImage) { action in
             self.hitsArray?.sort(by: { viewsOne, viewsTwo in
                 viewsOne.views > viewsTwo.views
             })
             self.sortType = .views
             self.topView.sortedButton.menu = self.interactiveSortMenu(sortetBy: action.title)
         }
-        let commentsAction = UIAction(title: SortByEnum.comments.labelMenu, image: IconsEnum.commentsMenuImage) { action in
+        let commentsAction = UIAction(title: SortByEnum.comments.labelMenu, image: ImagesEnum.commentsMenuImage) { action in
             self.hitsArray?.sort(by: { commentsOne, commentsTwo in
                 commentsOne.comments > commentsTwo.comments
             })
@@ -117,7 +117,7 @@ class FindPictureViewController: UIViewController {
             self.topView.sortedButton.menu = self.interactiveSortMenu(sortetBy: action.title)
         }
         
-        let menu = UIMenu(title: TitleEnum.titleMenu, image: IconsEnum.sortedImage, options: .singleSelection, children: [downloadsAction, likesAction, viewsAction, commentsAction])
+        let menu = UIMenu(title: TitleEnum.titleMenu, image: ImagesEnum.sortedImage, options: .singleSelection, children: [downloadsAction, likesAction, viewsAction, commentsAction])
         
         if let sortetBy = sortetBy {
             menu.children.forEach { action in

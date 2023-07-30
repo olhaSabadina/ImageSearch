@@ -11,7 +11,7 @@ class ImageCell: UICollectionViewCell {
     
     static var identCell = "imageCell"
   
-    private let networkManager = NetworkFetchManager()
+    private let networkManager = NetworkManager()
     private let searchImage = UIImageView()
     private let reaсtionImageView = UIImageView()
     private var stackView = UIStackView()
@@ -49,13 +49,13 @@ class ImageCell: UICollectionViewCell {
     }
     
     private func setViewImage(_ hit: Hit?, _ sortBy: SortByEnum) {
-        networkManager.fetchImageFromUrl(hit?.previewURL ?? "") { result in
+        networkManager.downloadImageFromUrl(hit?.previewURL ?? "") { result in
             switch result {
             case .success(let img):
                 DispatchQueue.main.async {
                     self.searchImage.image = img
                     self.reaсtionImageView.image = sortBy.reactoinImage
-                    self.countLabel.text = "\(sortBy.returnNumbers(hit))  "
+                    self.countLabel.text = "\(sortBy.returnValue(hit))  "
                     self.stackView.isHidden = sortBy == .none ? true : false
                 }
             case .failure(_):

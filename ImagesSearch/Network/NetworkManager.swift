@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct NetworkFetchManager {
+struct NetworkManager {
     
     func fetchData(findPictures: String, imageType: TypeEnum , completionhandler: @escaping (Result<ImagesData?, Error>)->Void) {
         guard let url = URL(string: "https://pixabay.com/api/?key=37479171-8736bcdb016edb77d2e073ccc&image_type=\(imageType.rawValue)&q=\(findPictures)")
@@ -48,6 +48,29 @@ struct NetworkFetchManager {
         }.resume()
     }
     
+//    func downloadImage(fromLink link: String, completion: @escaping (UIImage?)->()) {
+//
+//        guard let url = URL(string: link) else {
+//            print(NetworkErrors.badURL)
+//            return completion(nil)
+//        }
+//
+//        URLSession.shared.dataTask(with: url) { data, response, error in
+//            guard let data = data, error == nil else {
+//                print(NetworkErrors.invalidData)
+//                return completion(nil)
+//            }
+//            guard let response = response as? HTTPURLResponse,
+//                  response.statusCode == 200,
+//                  let image = UIImage(data: data)
+//            else {
+//                print(NetworkErrors.responseStatusCodeError)
+//                return completion(nil)
+//            }
+//            return completion(image)
+//        }.resume()
+//    }
+    
     private func parseJSON(data: Data) -> ImagesData? {
         let decoder = JSONDecoder()
         do{
@@ -59,33 +82,9 @@ struct NetworkFetchManager {
         }
         return nil
     }
-    
-    func downloadImage(fromLink link: String, completion: @escaping (UIImage?)->()) {
-        
-        guard let url = URL(string: link) else {
-            print(NetworkErrors.badURL)
-            return completion(nil)
-        }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else {
-                print(NetworkErrors.invalidData)
-                return completion(nil)
-            }
-            guard let response = response as? HTTPURLResponse,
-                  response.statusCode == 200,
-                  let image = UIImage(data: data)
-            else {
-                print(NetworkErrors.responseStatusCodeError)
-                return completion(nil)
-            }
-            
-            return completion(image)
-        }.resume()
-    }
 }
 
-    
-    
-    
-    
+
+
+
+
