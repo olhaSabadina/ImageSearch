@@ -11,8 +11,6 @@ import UIKit
 struct NetworkFetchManager {
     
     func fetchData(findPictures: String, imageType: TypeEnum , completionhandler: @escaping (Result<ImagesData?, Error>)->Void) {
-    //https://pixabay.com/api/?key=37479171-8736bcdb016edb77d2e073ccc&q=yellow+flowers&image_type=photo
-        print("https://pixabay.com/api/?key=37479171-8736bcdb016edb77d2e073ccc&image_type=\(imageType.rawValue)&q=\(findPictures)")
         guard let url = URL(string: "https://pixabay.com/api/?key=37479171-8736bcdb016edb77d2e073ccc&image_type=\(imageType.rawValue)&q=\(findPictures)")
         else {
             completionhandler(.failure(NetworkErrors.badURL))

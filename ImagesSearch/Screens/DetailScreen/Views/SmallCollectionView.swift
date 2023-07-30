@@ -30,12 +30,12 @@ class SmallCollectionView: UIView {
         backgroundColor = .white
     }
     
-    func setCollectionView() {
+    private func setCollectionView() {
         smalCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         addSubview(smalCollectionView)
     }
     
-    func createLayout() -> UICollectionViewLayout {
+    private func createLayout() -> UICollectionViewLayout {
         let fractional1: CGFloat = 0.6
         let fractional2: CGFloat = 0.4
         let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in

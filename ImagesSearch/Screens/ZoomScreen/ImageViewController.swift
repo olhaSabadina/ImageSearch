@@ -43,6 +43,8 @@ class ImageViewController: UIViewController {
         updateMinZoomScaleForSize(zoomType)
     }
     
+//MARK: -  @objc func:
+    
     @objc func closeImageVC() {
         navigationController?.popViewController(animated: true)
     }
@@ -51,6 +53,8 @@ class ImageViewController: UIViewController {
         zoomType = zoomType == .min ? .max : .min
         updateMinZoomScaleForSize(zoomType)
     }
+    
+//MARK: -  private func:
     
     private func setupView() {
         view.backgroundColor = .black
@@ -68,7 +72,6 @@ class ImageViewController: UIViewController {
     private func setupImageView() {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(imageView)
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(switchTypeZoom))
         tapGesture.numberOfTapsRequired = 2
         imageView.addGestureRecognizer(tapGesture)
@@ -78,7 +81,7 @@ class ImageViewController: UIViewController {
     private func setupCloseButton() {
         view.addSubview(closeButton)
         closeButton.translatesAutoresizingMaskIntoConstraints = false
-        closeButton.setImage(UIImage(systemName: ConstantEnum.closeButtonImage), for: .normal)
+        closeButton.setImage(IconsEnum.closeButtonImage, for: .normal)
         closeButton.setBorderLayer(backgroundColor: .lightGray.withAlphaComponent(0.8), borderColor: .black, borderWidth: 1, cornerRadius: 15, tintColor: .white)
         closeButton.addTarget(self, action: #selector(closeImageVC), for: .touchUpInside)
     }
@@ -103,7 +106,6 @@ class ImageViewController: UIViewController {
         let minScale = min(widthScale, heightScale)
         
         scrollView.minimumZoomScale = minScale
-//        scrollView.maximumZoomScale = 1
         
         switch zoomType {
         case .min:
@@ -150,5 +152,4 @@ extension ImageViewController: UIScrollViewDelegate {
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         updateConstraintsForSize(view.bounds.size)
     }
-
 }

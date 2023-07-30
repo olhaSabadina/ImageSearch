@@ -21,18 +21,19 @@ class StartViewController: UIViewController {
         }
     }
     
-    
-    // MARK: - Life cycle:
+// MARK: - Life cycle:
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configView()
     }
-
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         setConstraints()
     }
+    
+//MARK: - @objc func:
     
     @objc private func openFindPictureVC() {
         let findPictureVC = FindPictureViewController()
@@ -42,11 +43,7 @@ class StartViewController: UIViewController {
         searchTextField.text = nil
         navigationController?.pushViewController(findPictureVC, animated: true)
     }
-    
-    //MARK: - private func:
-    
 }
-
 //MARK: - TextFieldDelegate:
 
 extension StartViewController: UITextFieldDelegate {
@@ -61,10 +58,20 @@ extension StartViewController: UITextFieldDelegate {
 
 extension StartViewController {
     
-    private enum SetImages {
-        static let magnifyingglass  = UIImage(systemName: "magnifyingglass")
-        static let separator        = UIImage(systemName: "poweron")
-        static let chevronDown      = UIImage(systemName: "chevron.down")
+    private enum TitlesAndImagesEnum {
+        static let mainScreenTopTitle = "Send your audience\n on a visual adventure"
+        static let mainScreenDownTitle = "Photo by Free-Photos"
+        static let placeholderTextField = " search "
+        static let menuTitle = "Select Image Type"
+        
+        static let backgroundImage  = UIImage(named: "backgroundImage")
+        static let separatorImage   = UIImage(systemName: "poweron")
+        static let chevronDownImage = UIImage(systemName: "chevron.down")
+        
+        static let menuAllImages    = UIImage(systemName: "photo.stack.fill")
+        static let menuPhotoImage   = UIImage(systemName: "photo.fill")
+        static let menuIllustrationImage = UIImage(systemName: "circle.hexagonpath.fill")
+        static let menuVectorImage       = UIImage(systemName: "arrow.up.forward")
     }
     
     private func configView() {
@@ -77,7 +84,6 @@ extension StartViewController {
         setLeftButtonOnTextField()
         setRightButtonOnTextField()
         setupSearchButton()
-//        setConstraints()
     }
     
     private func setUpView() {
@@ -85,7 +91,7 @@ extension StartViewController {
     }
     
     private func setBackgroundImageView() {
-        backgroundImageView.image = UIImage(named: "backgroundImage")
+        backgroundImageView.image = TitlesAndImagesEnum.backgroundImage
         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(backgroundImageView)
     }
@@ -93,10 +99,9 @@ extension StartViewController {
     private func setTitleLabel() {
         titleLabel.font = UIFont.boldSystemFont(ofSize: 35)
         titleLabel.textAlignment = .center
-        titleLabel.text = "Send your audience\n on a visual adventure"
+        titleLabel.text = TitlesAndImagesEnum.mainScreenTopTitle
         titleLabel.textColor = .white
         titleLabel.numberOfLines = 0
-//        titleLabel.sizeToFit()
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.backgroundColor = .clear
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -106,7 +111,7 @@ extension StartViewController {
     private func setDownLabel() {
         downLabel.font = UIFont.boldSystemFont(ofSize: 13)
         downLabel.textAlignment = .center
-        downLabel.text = "Photo by Free-Photos"
+        downLabel.text = TitlesAndImagesEnum.mainScreenDownTitle
         downLabel.textColor = .white
         downLabel.numberOfLines = 0
         downLabel.adjustsFontSizeToFitWidth = true
@@ -117,7 +122,7 @@ extension StartViewController {
     
     private func setSearchTextField() {
         searchTextField.delegate = self
-        searchTextField.placeholder = " search "
+        searchTextField.placeholder = TitlesAndImagesEnum.placeholderTextField
         searchTextField.returnKeyType = .search
         searchTextField.font = .systemFont(ofSize: 18)
         searchTextField.autocapitalizationType = .none
@@ -129,7 +134,7 @@ extension StartViewController {
     
     private func setLeftButtonOnTextField() {
         let leftButton = UIButton()
-        leftButton.setImage(SetImages.magnifyingglass, for: .normal)
+        leftButton.setImage(IconsEnum.magnifyingglass, for: .normal)
         leftButton.tintColor = .secondaryLabel
         leftButton.frame = CGRect(x: 10, y: 8, width: 20, height: 20)
         let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
@@ -139,7 +144,7 @@ extension StartViewController {
     }
     
     private func setRightButtonOnTextField() {
-        let separatorImage = SetImages.separator
+        let separatorImage = TitlesAndImagesEnum.separatorImage
         let separatorImageView = UIImageView(image: separatorImage)
         separatorImageView.widthAnchor.constraint(equalToConstant: 2).isActive = true
         separatorImageView.alpha = 0.5
@@ -156,7 +161,7 @@ extension StartViewController {
     private func setImagesSearchButton() {
         imagesSearchButton.setTitle(typeImageFind.labelButton, for: .normal)
         imagesSearchButton.setTitleColor(.secondaryLabel, for: .normal)
-        imagesSearchButton.setImage(SetImages.chevronDown, for: .normal)
+        imagesSearchButton.setImage(TitlesAndImagesEnum.chevronDownImage, for: .normal)
         imagesSearchButton.titleLabel?.font = .systemFont(ofSize: 15)
         imagesSearchButton.tintColor = .secondaryLabel
         imagesSearchButton.titleLabel?.adjustsFontSizeToFitWidth = true
@@ -166,24 +171,24 @@ extension StartViewController {
     }
     
     private func createMenu(typePicture: String? = nil) -> UIMenu {
-        let allAction = UIAction(title: TypeEnum.all.labelButton, image: UIImage(systemName: "photo.stack.fill"), attributes: .keepsMenuPresented) { action in
+        let allAction = UIAction(title: TypeEnum.all.labelButton, image: TitlesAndImagesEnum.menuAllImages, attributes: .keepsMenuPresented) { action in
             self.typeImageFind = .all
             self.imagesSearchButton.menu = self.createMenu(typePicture: action.title)
         }
-        let photoAction = UIAction(title: TypeEnum.photo.labelButton, image: UIImage(systemName: "photo.fill")) { action in
+        let photoAction = UIAction(title: TypeEnum.photo.labelButton, image: TitlesAndImagesEnum.menuPhotoImage) { action in
             self.typeImageFind = .photo
             self.imagesSearchButton.menu = self.createMenu(typePicture: action.title)
         }
-        let illustrationAction = UIAction(title: TypeEnum.illustration.labelButton, image: UIImage(systemName: "circle.hexagonpath.fill")) { action in
+        let illustrationAction = UIAction(title: TypeEnum.illustration.labelButton, image: TitlesAndImagesEnum.menuIllustrationImage) { action in
             self.typeImageFind = .illustration
             self.imagesSearchButton.menu = self.createMenu(typePicture: action.title)
         }
-        let vectorAction = UIAction(title: TypeEnum.vectorSVG.labelButton, image: UIImage(systemName: "arrow.up.forward")) { action in
+        let vectorAction = UIAction(title: TypeEnum.vectorSVG.labelButton, image: TitlesAndImagesEnum.menuVectorImage) { action in
             self.typeImageFind = .vectorSVG
             self.imagesSearchButton.menu = self.createMenu(typePicture: action.title)
         }
         
-        let menu = UIMenu(title: "Select Image Type", image: UIImage(systemName: "filemenu.and.cursorarrow"), options: .singleSelection, children: [allAction, photoAction, illustrationAction, vectorAction])
+        let menu = UIMenu(title: TitlesAndImagesEnum.menuTitle, image: nil, options: .singleSelection, children: [allAction, photoAction, illustrationAction, vectorAction])
         
         if let typePicture = typePicture {
             menu.children.forEach { action in
@@ -197,14 +202,13 @@ extension StartViewController {
             let action = menu.children.first as? UIAction
             action?.state = .on
         }
-        
         return menu
     }
     
     private func setupSearchButton(){
         searchButton.setTitle("  Search", for: .normal)
         searchButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        searchButton.setImage(SetImages.magnifyingglass, for: .normal)
+        searchButton.setImage(IconsEnum.magnifyingglass, for: .normal)
         searchButton.setTitleColor(.white, for: .normal)
         searchButton.setBorderLayer(backgroundColor: .blue, borderColor: .black, borderWidth: 1, cornerRadius: 8, tintColor: .white)
         searchButton.addTarget(self, action: #selector(openFindPictureVC), for: .touchUpInside)

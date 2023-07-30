@@ -11,12 +11,12 @@ class ImageCell: UICollectionViewCell {
     
     static var identCell = "imageCell"
   
-    let networkManager = NetworkFetchManager()
-    var stackView = UIStackView()
+    private let networkManager = NetworkFetchManager()
     private let searchImage = UIImageView()
-    let reaсtionImageView = UIImageView()
+    private let reaсtionImageView = UIImageView()
+    private var stackView = UIStackView()
+    private var countLabel = UILabel()
     let shareButton = UIButton()
-    var countLabel = UILabel()
     var sortType: SortByEnum = .none
     var hit: Hit? = nil {
         didSet {
@@ -48,7 +48,7 @@ class ImageCell: UICollectionViewCell {
         searchImage.image = nil
     }
     
-    func setViewImage(_ hit: Hit?, _ sortBy: SortByEnum) {
+    private func setViewImage(_ hit: Hit?, _ sortBy: SortByEnum) {
         networkManager.fetchImageFromUrl(hit?.previewURL ?? "") { result in
             switch result {
             case .success(let img):
@@ -63,7 +63,6 @@ class ImageCell: UICollectionViewCell {
             }
         }
     }
-    
     
     private func configureImage() {
         addSubview(searchImage)
@@ -84,7 +83,7 @@ class ImageCell: UICollectionViewCell {
                                    tintColor: nil)
     }
     
-    func configureStackView() {
+    private func configureStackView() {
         stackView = UIStackView(arrangedSubviews: [reaсtionImageView, countLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
@@ -94,12 +93,12 @@ class ImageCell: UICollectionViewCell {
         addSubview(stackView)
     }
     
-    func configureReaсtionImageView() {
+    private func configureReaсtionImageView() {
         reaсtionImageView.tintColor = .white
         reaсtionImageView.widthAnchor.constraint(equalTo: reaсtionImageView.heightAnchor).isActive = true
     }
     
-    func configureCountLabel() {
+    private func configureCountLabel() {
         countLabel.textColor = .white
         countLabel.font = .systemFont(ofSize: 15)
     }

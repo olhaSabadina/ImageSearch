@@ -9,13 +9,13 @@ import UIKit
 
 class ImagePageViewController: UIViewController {
 
-    let networkManager = NetworkFetchManager()
-    let topView  = TopView()
-    let largeImageView = LargeImageView()
-    let downView = SmallCollectionView()
-    var sortType: SortByEnum = .none
+    private let networkManager = NetworkFetchManager()
+    private let topView  = TopView()
+    private let largeImageView = LargeImageView()
+    private let downView = SmallCollectionView()
+    private var sortType: SortByEnum = .none
+    private var hit: Hit
     var completion: ((String) -> Void)?
-    var hit: Hit
     var arrayHits: [Hit]? = nil {
         didSet {
             downView.smalCollectionView.reloadData()
@@ -41,6 +41,8 @@ class ImagePageViewController: UIViewController {
         setCollectionView()
         setConstraint()
     }
+
+//MARK: - @objc func:
     
     @objc func zoomImage() {
         networkManager.downloadImage(fromLink: hit.largeImageURL) { img in
@@ -81,7 +83,9 @@ class ImagePageViewController: UIViewController {
         view.endEditing(true)
     }
     
-    func addTapGestureToHideKeyboard() {
+//MARK: -  private func:
+    
+   private func addTapGestureToHideKeyboard() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         tapGesture.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapGesture)
@@ -146,10 +150,8 @@ class ImagePageViewController: UIViewController {
         largeImageView.zoomButton.addTarget(self, action: #selector(zoomImage), for: .touchUpInside)
         largeImageView.shareButton.addTarget(self, action: #selector(sharePreviewImage), for: .touchUpInside)
         largeImageView.downloadButton.addTarget(self, action: #selector(downloadImageActoin), for: .touchUpInside)
-        topView.searchButton.menu = interactiveSortMenu()
-        
+        topView.sortedButton.menu = interactiveSortMenu()
     }
-    
     
     private func setTopView() {
         navigationController?.isNavigationBarHidden = true
@@ -159,7 +161,7 @@ class ImagePageViewController: UIViewController {
         topView.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    func setLargeImageView() {
+    private func setLargeImageView() {
         view.addSubview(largeImageView)
         largeImageView.translatesAutoresizingMaskIntoConstraints = false
     }
@@ -183,7 +185,6 @@ extension ImagePageViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SmallCell.identCell, for: indexPath) as? SmallCell else {return UICollectionViewCell()}
         cell.hit = arrayHits?[indexPath.item]
-        
         return cell
     }
     
@@ -234,43 +235,43 @@ extension ImagePageViewController: UITextFieldDelegate {
 extension ImagePageViewController {
     
     func interactiveSortMenu(sortetBy: String? = nil) -> UIMenu {
-        let downloadsAction = UIAction(title: SortByEnum.downloads.labelMenu, image: UIImage(systemName: ConstantEnum.downloadMenuImage)) { action in
+        let downloadsAction = UIAction(title: SortByEnum.downloads.labelMenu, image: IconsEnum.downloadMenuImage) { action in
             self.arrayHits?.sort(by: { downloadOne, downloadTwo in
                 downloadOne.downloads > downloadTwo.downloads
             })
             self.downView.smalCollectionView.scrollToItem(at: .init(item: 0, section: 0), at: .top, animated: true)
             self.sortType = .downloads
-            self.topView.searchButton.menu = self.interactiveSortMenu(sortetBy: action.title)
+            self.topView.sortedButton.menu = self.interactiveSortMenu(sortetBy: action.title)
         }
         
-        let likesAction = UIAction(title: SortByEnum.likes.labelMenu, image: UIImage(systemName: "hand.thumbsup")) { action in
+        let likesAction = UIAction(title: SortByEnum.likes.labelMenu, image: IconsEnum.likesMenuImage) { action in
             self.arrayHits?.sort(by: { likesOne, likesTwo in
                 likesOne.likes > likesTwo.likes
             })
             self.downView.smalCollectionView.scrollToItem(at: .init(item: 0, section: 0), at: .top, animated: true)
             self.sortType = .likes
-            self.topView.searchButton.menu = self.interactiveSortMenu(sortetBy: action.title)
+            self.topView.sortedButton.menu = self.interactiveSortMenu(sortetBy: action.title)
         }
         
-        let viewsAction = UIAction(title: SortByEnum.views.labelMenu, image: UIImage(systemName: "eye")) { action in
+        let viewsAction = UIAction(title: SortByEnum.views.labelMenu, image: IconsEnum.viewMenuImage) { action in
             self.arrayHits?.sort(by: { viewsOne, viewsTwo in
                 viewsOne.views > viewsTwo.views
             })
             self.sortType = .views
             self.downView.smalCollectionView.scrollToItem(at: .init(item: 0, section: 0), at: .top, animated: true)
-            self.topView.searchButton.menu = self.interactiveSortMenu(sortetBy: action.title)
+            self.topView.sortedButton.menu = self.interactiveSortMenu(sortetBy: action.title)
         }
         
-        let commentsAction = UIAction(title: SortByEnum.comments.labelMenu, image: UIImage(systemName: "ellipsis.message.fill")) { action in
+        let commentsAction = UIAction(title: SortByEnum.comments.labelMenu, image: IconsEnum.commentsMenuImage) { action in
             self.arrayHits?.sort(by: { commentsOne, commentsTwo in
                 commentsOne.comments > commentsTwo.comments
             })
             self.downView.smalCollectionView.scrollToItem(at: .init(item: 0, section: 0), at: .top, animated: true)
             self.sortType = .comments
-            self.topView.searchButton.menu = self.interactiveSortMenu(sortetBy: action.title)
+            self.topView.sortedButton.menu = self.interactiveSortMenu(sortetBy: action.title)
         }
         
-        let menu = UIMenu(title: ConstantEnum.titleMenu, image: UIImage(systemName: ConstantEnum.menuImage), options: .singleSelection, children: [downloadsAction, likesAction, viewsAction, commentsAction])
+        let menu = UIMenu(title: TitleEnum.titleMenu, image: UIImage(systemName: IconsEnum.menuImage), options: .singleSelection, children: [downloadsAction, likesAction, viewsAction, commentsAction])
         
         if let sortetBy = sortetBy {
             menu.children.forEach { action in
@@ -283,5 +284,4 @@ extension ImagePageViewController {
         }
         return menu
     }
-
 }

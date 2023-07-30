@@ -10,6 +10,7 @@ import UIKit
 class RelatedCell: UICollectionViewCell {
     
     static var identCell = "worldCell"
+    
     let labelText = PaddedLabel()
     
     override init(frame: CGRect) {
@@ -20,7 +21,6 @@ class RelatedCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
     }
     
     required init?(coder: NSCoder) {

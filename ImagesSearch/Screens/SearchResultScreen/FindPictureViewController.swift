@@ -9,14 +9,14 @@ import UIKit
 
 class FindPictureViewController: UIViewController {
     
-    let topView = TopView()
-    let imageCell = ImageCell()
-    let networkManager = NetworkFetchManager()
-    var sortType: SortByEnum = .none
-    var collectionView : UICollectionView! = nil
-    var imagesDescription: ImagesData? = nil
     var typeImageFind: TypeEnum = .all
-    var hitsArray: [Hit]? {
+    private let topView = TopView()
+    private let imageCell = ImageCell()
+    private let networkManager = NetworkFetchManager()
+    private var sortType: SortByEnum = .none
+    private var collectionView : UICollectionView! = nil
+    private var imagesDescription: ImagesData? = nil
+    private var hitsArray: [Hit]? {
         didSet {
             collectionView.reloadData()
         }
@@ -34,6 +34,7 @@ class FindPictureViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
     }
+//MARK: - @objc func:
     
     @objc private func hideKeyboard() {
         view.endEditing(true)
@@ -48,7 +49,9 @@ class FindPictureViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    func addTapGestureToHideKeyboard() {
+//MARK: - @objc private func:
+    
+    private func addTapGestureToHideKeyboard() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         tapGesture.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapGesture)
@@ -70,7 +73,7 @@ class FindPictureViewController: UIViewController {
         }
     }
     
-    func alertNotData() {
+    private func alertNotData() {
         let alert = UIAlertController(title: "Sorry", message: "Your request is invalid", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { _ in
             self.topView.textField.text = ""
@@ -79,42 +82,42 @@ class FindPictureViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    func addTargetForButtons() {
+    private func addTargetForButtons() {
         topView.backButton.addTarget(self, action: #selector(backToStartVC), for: .touchUpInside)
-        topView.searchButton.menu = interactiveSortMenu()
+        topView.sortedButton.menu = interactiveSortMenu()
     }
     
-    func interactiveSortMenu(sortetBy: String? = nil) -> UIMenu {
-        let downloadsAction = UIAction(title: SortByEnum.downloads.labelMenu, image: UIImage(systemName: "arrow.down.circle")) { action in
+    private func interactiveSortMenu(sortetBy: String? = nil) -> UIMenu {
+        let downloadsAction = UIAction(title: SortByEnum.downloads.labelMenu, image: IconsEnum.downloadMenuImage) { action in
             self.hitsArray?.sort(by: { downloadOne, downloadTwo in
                 downloadOne.downloads > downloadTwo.downloads
             })
             self.sortType = .downloads
-            self.topView.searchButton.menu = self.interactiveSortMenu(sortetBy: action.title)
+            self.topView.sortedButton.menu = self.interactiveSortMenu(sortetBy: action.title)
         }
-        let likesAction = UIAction(title: SortByEnum.likes.labelMenu, image: UIImage(systemName: "hand.thumbsup")) { action in
+        let likesAction = UIAction(title: SortByEnum.likes.labelMenu, image: IconsEnum.likesMenuImage) { action in
             self.hitsArray?.sort(by: { likesOne, likesTwo in
                 likesOne.likes > likesTwo.likes
             })
             self.sortType = .likes
-            self.topView.searchButton.menu = self.interactiveSortMenu(sortetBy: action.title)
+            self.topView.sortedButton.menu = self.interactiveSortMenu(sortetBy: action.title)
         }
-        let viewsAction = UIAction(title: SortByEnum.views.labelMenu, image: UIImage(systemName: "eye")) { action in
+        let viewsAction = UIAction(title: SortByEnum.views.labelMenu, image: IconsEnum.viewMenuImage) { action in
             self.hitsArray?.sort(by: { viewsOne, viewsTwo in
                 viewsOne.views > viewsTwo.views
             })
             self.sortType = .views
-            self.topView.searchButton.menu = self.interactiveSortMenu(sortetBy: action.title)
+            self.topView.sortedButton.menu = self.interactiveSortMenu(sortetBy: action.title)
         }
-        let commentsAction = UIAction(title: SortByEnum.comments.labelMenu, image: UIImage(systemName: "ellipsis.message.fill")) { action in
+        let commentsAction = UIAction(title: SortByEnum.comments.labelMenu, image: IconsEnum.commentsMenuImage) { action in
             self.hitsArray?.sort(by: { commentsOne, commentsTwo in
                 commentsOne.comments > commentsTwo.comments
             })
             self.sortType = .comments
-            self.topView.searchButton.menu = self.interactiveSortMenu(sortetBy: action.title)
+            self.topView.sortedButton.menu = self.interactiveSortMenu(sortetBy: action.title)
         }
         
-        let menu = UIMenu(title: "Sort by person action", image: UIImage(systemName: "slider.horizontal.2.square.on.square"), options: .singleSelection, children: [downloadsAction, likesAction, viewsAction, commentsAction])
+        let menu = UIMenu(title: TitleEnum.titleMenu, image: IconsEnum.sortedImage, options: .singleSelection, children: [downloadsAction, likesAction, viewsAction, commentsAction])
         
         if let sortetBy = sortetBy {
             menu.children.forEach { action in
@@ -130,7 +133,7 @@ class FindPictureViewController: UIViewController {
     
 // MARK: - Set view elemets:
     
-    func setView() {
+    private func setView() {
         navigationController?.isNavigationBarHidden = true
         view.addSubview(topView)
         view.backgroundColor = .white
@@ -138,7 +141,7 @@ class FindPictureViewController: UIViewController {
         topView.textField.delegate = self
     }
     
-    func setCollectionView() {
+    private func setCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.register(RelatedCell.self, forCellWithReuseIdentifier: RelatedCell.identCell)
         collectionView.register(HeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionReusableView.headerIdentifier )

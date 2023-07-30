@@ -20,7 +20,7 @@
 		58C3B25E2A44642C00DB2776 /* HeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C3B25D2A44642C00DB2776 /* HeaderCollectionReusableView.swift */; };
 		58C3B2602A44648900DB2776 /* RelatedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C3B25F2A44648900DB2776 /* RelatedCell.swift */; };
 		58FE33682A755EDE004C577D /* SortItemsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE33672A755EDE004C577D /* SortItemsEnum.swift */; };
-		58FE336A2A755F2E004C577D /* ConstantEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE33692A755F2E004C577D /* ConstantEnum.swift */; };
+		58FE336A2A755F2E004C577D /* IconsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE33692A755F2E004C577D /* IconsEnum.swift */; };
 		58FE336C2A755F96004C577D /* PaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE336B2A755F96004C577D /* PaddedLabel.swift */; };
 		58FE336E2A755FE6004C577D /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE336D2A755FE6004C577D /* UIImageView+Extension.swift */; };
 		58FE33702A75605F004C577D /* Share+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE336F2A75605F004C577D /* Share+Extension.swift */; };
@@ -33,6 +33,7 @@
 		58FE33872A7570FE004C577D /* SmallCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE33862A7570FE004C577D /* SmallCollectionView.swift */; };
 		58FE338A2A7572DD004C577D /* SmallCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE33892A7572DD004C577D /* SmallCell.swift */; };
 		58FE338D2A7574E7004C577D /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE338C2A7574E7004C577D /* ImageViewController.swift */; };
+		58FE338F2A764DE2004C577D /* TitleEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE338E2A764DE2004C577D /* TitleEnum.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,7 +52,7 @@
 		58C3B25D2A44642C00DB2776 /* HeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		58C3B25F2A44648900DB2776 /* RelatedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedCell.swift; sourceTree = "<group>"; };
 		58FE33672A755EDE004C577D /* SortItemsEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortItemsEnum.swift; sourceTree = "<group>"; };
-		58FE33692A755F2E004C577D /* ConstantEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantEnum.swift; sourceTree = "<group>"; };
+		58FE33692A755F2E004C577D /* IconsEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsEnum.swift; sourceTree = "<group>"; };
 		58FE336B2A755F96004C577D /* PaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedLabel.swift; sourceTree = "<group>"; };
 		58FE336D2A755FE6004C577D /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		58FE336F2A75605F004C577D /* Share+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Share+Extension.swift"; sourceTree = "<group>"; };
@@ -64,6 +65,7 @@
 		58FE33862A7570FE004C577D /* SmallCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCollectionView.swift; sourceTree = "<group>"; };
 		58FE33892A7572DD004C577D /* SmallCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCell.swift; sourceTree = "<group>"; };
 		58FE338C2A7574E7004C577D /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		58FE338E2A764DE2004C577D /* TitleEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleEnum.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,7 +175,8 @@
 			isa = PBXGroup;
 			children = (
 				58FE33672A755EDE004C577D /* SortItemsEnum.swift */,
-				58FE33692A755F2E004C577D /* ConstantEnum.swift */,
+				58FE33692A755F2E004C577D /* IconsEnum.swift */,
+				58FE338E2A764DE2004C577D /* TitleEnum.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -328,12 +331,13 @@
 				58FE33852A75708D004C577D /* LargeImageView.swift in Sources */,
 				58FE338A2A7572DD004C577D /* SmallCell.swift in Sources */,
 				5849C1E52A3F3B65002F9C63 /* ImagesData.swift in Sources */,
+				58FE338F2A764DE2004C577D /* TitleEnum.swift in Sources */,
 				58FE33682A755EDE004C577D /* SortItemsEnum.swift in Sources */,
 				5849C1E92A3F7030002F9C63 /* FindPictureViewController.swift in Sources */,
 				58FE33832A75701A004C577D /* ImagePageViewController.swift in Sources */,
 				58FE33722A75609E004C577D /* String+Extention.swift in Sources */,
 				58FE336C2A755F96004C577D /* PaddedLabel.swift in Sources */,
-				58FE336A2A755F2E004C577D /* ConstantEnum.swift in Sources */,
+				58FE336A2A755F2E004C577D /* IconsEnum.swift in Sources */,
 				584F9D552A3A4CA300E9B4BF /* StartViewController.swift in Sources */,
 				584F9D512A3A4CA300E9B4BF /* AppDelegate.swift in Sources */,
 				58C3B2602A44648900DB2776 /* RelatedCell.swift in Sources */,

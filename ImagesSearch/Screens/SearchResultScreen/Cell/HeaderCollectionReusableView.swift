@@ -33,5 +33,4 @@ class HeaderCollectionReusableView: UICollectionReusableView {
     func configTotalImageLabel( _ totalImages: Int) {
         totalImageLabel.text = "\(totalImages) Free Images"
     }
-    
 }

@@ -11,7 +11,7 @@ class TopView: UIView {
 
     private var stackView = UIStackView()
     let backButton = UIButton(type: .system)
-    let searchButton = UIButton(type: .system)
+    let sortedButton = UIButton(type: .system)
     let textField = UITextField()
 
     override init(frame: CGRect) {
@@ -20,7 +20,7 @@ class TopView: UIView {
         setTextField()
         setLeftButtonOnTextField()
         setBackButton()
-        setSearchButton()
+        setSortedButton()
         configStackView()
     }
     
@@ -33,7 +33,7 @@ class TopView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setView() {
+    private func setView() {
         backgroundColor = .white
         layer.shadowOffset = .init(width: 0, height: 0.5)
         layer.shadowColor = UIColor.gray.cgColor
@@ -42,7 +42,7 @@ class TopView: UIView {
     }
     
     private func configStackView() {
-        stackView = UIStackView(arrangedSubviews: [backButton, textField, searchButton])
+        stackView = UIStackView(arrangedSubviews: [backButton, textField, sortedButton])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.distribution = .fill
@@ -62,7 +62,7 @@ class TopView: UIView {
 
     private func setLeftButtonOnTextField() {
         let leftButton = UIButton()
-        leftButton.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        leftButton.setImage(IconsEnum.magnifyingglass, for: .normal)
         leftButton.tintColor = .secondaryLabel
         leftButton.frame = CGRect(x: 10, y: 8, width: 20, height: 20)
         let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
@@ -77,11 +77,11 @@ class TopView: UIView {
         backButton.heightAnchor.constraint(equalTo: backButton.widthAnchor).isActive = true
     }
     
-    private func  setSearchButton() {
-        searchButton.setImage(UIImage(systemName: "slider.horizontal.3"), for: .normal)
-        searchButton.setBorderLayer(backgroundColor: .clear, borderColor: .lightGray.withAlphaComponent(0.4), borderWidth: 1, cornerRadius: 4, tintColor: .black)
-        searchButton.heightAnchor.constraint(equalTo: searchButton.widthAnchor).isActive = true
-        searchButton.showsMenuAsPrimaryAction = true
+    private func  setSortedButton() {
+        sortedButton.setImage(IconsEnum.sortedImage, for: .normal)
+        sortedButton.setBorderLayer(backgroundColor: .clear, borderColor: .lightGray.withAlphaComponent(0.4), borderWidth: 1, cornerRadius: 4, tintColor: .black)
+        sortedButton.heightAnchor.constraint(equalTo: sortedButton.widthAnchor).isActive = true
+        sortedButton.showsMenuAsPrimaryAction = true
     }
     
     private func setConstraint() {
