@@ -12,9 +12,7 @@ struct ImagesData: Codable {
     var hits: [Hit]
     var related: [String] {
         guard  hits.count != 0 && hits[0].tags != "" else {return []}
-        var relatedArray = hits[0].tags.components(separatedBy: ",")
-        relatedArray.insert("Related", at: 0)
-        return relatedArray
+        return hits[0].tags.transformRelatedToArray()
     }
 }
 
@@ -48,7 +46,6 @@ enum TypeEnum: String, Codable {
     case illustration = "illustration"
     case vectorAI = "vectorAI"
     case vectorSVG = "vector/svg"
-    
     
     var labelButton: String {
         switch self {

@@ -16,6 +16,7 @@ class ImageCell: UICollectionViewCell {
     private let reaсtionImageView = UIImageView()
     private var stackView = UIStackView()
     private var countLabel = UILabel()
+    
     let shareButton = UIButton()
     var sortType: SortByEnum = .none
     var hit: Hit? = nil {
@@ -73,7 +74,7 @@ class ImageCell: UICollectionViewCell {
     
     private func configureShareButton() {
         addSubview(shareButton)
-        shareButton.setImage(UIImage(named: "share"), for: .normal)
+        shareButton.setImage(ImagesEnum.shareButton, for: .normal)
         shareButton.translatesAutoresizingMaskIntoConstraints = false
         shareButton.setBorderLayer(backgroundColor: .init(
             cgColor: .init(red: 226, green: 226, blue: 226, alpha: 1)),

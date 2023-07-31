@@ -33,21 +33,21 @@ enum SortByEnum {
     var reactoinImage: UIImage? {
         switch self {
         case .downloads:
-            return UIImage(systemName: "arrow.down.circle")
+            return ImagesEnum.downloadMenuImage
         case .views:
-            return UIImage(systemName: "eye")
+            return ImagesEnum.viewMenuImage
         case .likes:
-            return UIImage(systemName: "hand.thumbsup")
+            return ImagesEnum.likesMenuImage
         case .comments:
-            return UIImage(systemName: "ellipsis.message.fill")
+            return ImagesEnum.commentsMenuImage
         case .none:
             return nil
         }
     }
     
-    
-    func returnNumbers(_ hit: Hit?) -> Int {
+    func returnValue(_ hit: Hit?) -> Int {
          guard let hit = hit else {return 0}
+       
         switch self {
         case .none:
             return 0

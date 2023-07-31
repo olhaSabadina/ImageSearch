@@ -18,7 +18,7 @@ class TopView: UIView {
         super .init(frame: frame)
         setView()
         setTextField()
-        setLeftButtonOnTextField()
+        setLeftImageOnTextField()
         setBackButton()
         setSortedButton()
         configStackView()
@@ -51,7 +51,7 @@ class TopView: UIView {
     }
     
     private func setTextField() {
-        textField.placeholder = " Search images, vectors "
+        textField.placeholder = TitleEnum.placeHolderTF
         textField.font = .systemFont(ofSize: 18)
         textField.autocapitalizationType = .none
         textField.returnKeyType = .search
@@ -60,25 +60,24 @@ class TopView: UIView {
         textField.setBorderLayer(backgroundColor: .secondarySystemBackground.withAlphaComponent(0.6), borderColor: .lightGray.withAlphaComponent(0.4), borderWidth: 1, cornerRadius: 4, tintColor: nil)
     }
 
-    private func setLeftButtonOnTextField() {
-        let leftButton = UIButton()
-        leftButton.setImage(IconsEnum.magnifyingglass, for: .normal)
-        leftButton.tintColor = .secondaryLabel
-        leftButton.frame = CGRect(x: 10, y: 8, width: 20, height: 20)
+    private func setLeftImageOnTextField() {
+        let leftImageOnTF = UIImageView(image: ImagesEnum.magnifyingglass)
+        leftImageOnTF.tintColor = .secondaryLabel
+        leftImageOnTF.frame = CGRect(x: 10, y: 8, width: 20, height: 20)
         let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
-        leftView.addSubview(leftButton)
+        leftView.addSubview(leftImageOnTF)
         textField.leftViewMode = UITextField.ViewMode.always
         textField.leftView = leftView
     }
     
     private func setBackButton() {
-        backButton.setImage(UIImage(named: "P"), for: .normal)
+        backButton.setImage(ImagesEnum.backButtonImage, for: .normal)
         backButton.setBorderLayer(backgroundColor: .blue, borderColor: .lightText, borderWidth: 1, cornerRadius: 4, tintColor: .white)
         backButton.heightAnchor.constraint(equalTo: backButton.widthAnchor).isActive = true
     }
     
     private func  setSortedButton() {
-        sortedButton.setImage(IconsEnum.sortedImage, for: .normal)
+        sortedButton.setImage(ImagesEnum.sortedImage, for: .normal)
         sortedButton.setBorderLayer(backgroundColor: .clear, borderColor: .lightGray.withAlphaComponent(0.4), borderWidth: 1, cornerRadius: 4, tintColor: .black)
         sortedButton.heightAnchor.constraint(equalTo: sortedButton.widthAnchor).isActive = true
         sortedButton.showsMenuAsPrimaryAction = true

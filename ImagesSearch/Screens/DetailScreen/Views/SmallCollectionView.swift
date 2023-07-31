@@ -26,6 +26,8 @@ class SmallCollectionView: UIView {
         smalCollectionView.frame = self.bounds
     }
     
+//MARK: - Private func:
+    
     private func setupView() {
         backgroundColor = .white
     }

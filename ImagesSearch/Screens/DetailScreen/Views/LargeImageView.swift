@@ -13,11 +13,11 @@ class LargeImageView: UIView {
     let zoomButton = UIButton(type: .system)
     let downloadButton = UIButton(type: .system)
     let shareButton = UIButton(type: .system)
+    
     private var mainStack = UIStackView()
     private let formatPhotoLabel  = UILabel()
     private let licenseLabel = UILabel()
     private let commercialLabel = UILabel()
-    private let attributionRequiredLabel = UILabel()
 
     
     override init(frame: CGRect) {
@@ -68,19 +68,18 @@ class LargeImageView: UIView {
     
     private func setAttributePhotoLabels() {
         let arraylabels = [licenseLabel, commercialLabel]
+        
         arraylabels.forEach { label in
             label.font = .systemFont(ofSize: 15)
             label.textAlignment = .left
         }
-        licenseLabel.text = " APP License "
+        
+        licenseLabel.text = "APP License"
         licenseLabel.textColor = .systemIndigo
         
-        commercialLabel.text = " Free for commercial use\n No attribution required "
+        commercialLabel.text = "Free for commercial use\n No attribution required"
         commercialLabel.textColor = .lightGray
         commercialLabel.numberOfLines = 2
-        
-        attributionRequiredLabel.text = " No attribution required "
-        attributionRequiredLabel.textColor = .lightGray
     }
     
     private func setFormatPhotoLabel() {
@@ -91,8 +90,8 @@ class LargeImageView: UIView {
     }
     
     private func setShareButton() {
-        shareButton.setTitle("    Share ", for: .normal)
-        shareButton.setImage(UIImage(named: "share"), for: .normal)
+        shareButton.setTitle(TitleEnum.titleShareButton, for: .normal)
+        shareButton.setImage(ImagesEnum.shareButton, for: .normal)
         shareButton.setBorderLayer(backgroundColor: .init(red: 107, green: 86, blue: 223, alpha: 1),
                                    borderColor: .darkGray,
                                    borderWidth: 1,
@@ -101,7 +100,7 @@ class LargeImageView: UIView {
     }
     
     private func setZoomButton() {
-        zoomButton.setImage(UIImage(systemName: "plus.magnifyingglass"), for: .normal)
+        zoomButton.setImage(ImagesEnum.zoomButtonImage, for: .normal)
         zoomButton.translatesAutoresizingMaskIntoConstraints = false
         zoomButton.setBorderLayer(backgroundColor: .init(
             cgColor: .init(red: 226, green: 226, blue: 226, alpha: 1)),
@@ -113,9 +112,9 @@ class LargeImageView: UIView {
     }
     
     private func setDownloadButton() {
-        downloadButton.setTitle(" Dowmload ", for: .normal)
+        downloadButton.setTitle(TitleEnum.downloadButton, for: .normal)
         downloadButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        downloadButton.setImage(UIImage(systemName: "arrow.down.circle"), for: .normal)
+        downloadButton.setImage(ImagesEnum.downloadMenuImage, for: .normal)
         downloadButton.setTitleColor(.white, for: .normal)
         downloadButton.setBorderLayer(backgroundColor: .blue, borderColor: .black, borderWidth: 1, cornerRadius: 8, tintColor: .white)
         downloadButton.translatesAutoresizingMaskIntoConstraints = false

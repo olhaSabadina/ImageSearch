@@ -11,4 +11,10 @@ extension String {
     func replaceSpaceToPlus() -> String {
         return self.replacingOccurrences(of: " ", with: "+")
     }
+    
+    func transformRelatedToArray() -> [String] {
+        var relatedArray = self.components(separatedBy: ",")
+        relatedArray.insert("Related", at: 0)
+        return relatedArray
+    }
 }

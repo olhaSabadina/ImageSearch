@@ -19,10 +19,6 @@ class RelatedCell: UICollectionViewCell {
         setConstraint()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -34,7 +30,15 @@ class RelatedCell: UICollectionViewCell {
         labelText.text = nil
     }
     
-    fileprivate func setConstraint() {
+    func setTextLabel(_ indexPath: Int, textLabel: String) {
+        labelText.text = textLabel
+        if indexPath != 0 {
+            labelText.backgroundColor = .lightGray.withAlphaComponent(0.3)
+            labelText.textColor = .black
+        }
+    }
+    
+    private func setConstraint() {
         NSLayoutConstraint.activate([
             labelText.topAnchor.constraint(equalTo: contentView.topAnchor),
             labelText.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
@@ -53,13 +57,5 @@ class RelatedCell: UICollectionViewCell {
         labelText.textColor = .lightGray
         labelText.adjustsFontForContentSizeCategory = true
         labelText.sizeToFit()
-    }
-    
-    func setTextLabel(_ indexPath: Int, textLabel: String) {
-        labelText.text = textLabel
-        if indexPath != 0 {
-            labelText.backgroundColor = .lightGray.withAlphaComponent(0.3)
-            labelText.textColor = .black
-        }
     }
 }

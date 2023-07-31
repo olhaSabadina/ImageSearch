@@ -11,8 +11,9 @@ class SmallCell: UICollectionViewCell {
 
     static var identCell = "SmallCell"
   
-    private let networkManager = NetworkFetchManager()
+    private let networkManager = NetworkManager()
     private let smallImage = UIImageView()
+   
     var hit: Hit? = nil {
         didSet {
             updateCellImage(hit?.previewURL)
@@ -46,7 +47,7 @@ class SmallCell: UICollectionViewCell {
     
     private func updateCellImage(_ urlWeb: String?) {
         guard let urlString  = urlWeb else {return}
-        networkManager.fetchImageFromUrl(urlString) { result in
+        networkManager.downloadImageFromUrl(urlString) { result in
             switch result {
             case .success(let img):
                 DispatchQueue.main.async {

@@ -8,19 +8,22 @@
 import UIKit
 
 class ImagePageViewController: UIViewController {
-
-    private let networkManager = NetworkFetchManager()
-    private let topView  = TopView()
+    
+    private let networkManager = NetworkManager()
+    let topView  = TopView()
     private let largeImageView = LargeImageView()
-    private let downView = SmallCollectionView()
-    private var sortType: SortByEnum = .none
+    let downView = SmallCollectionView()
+    var sortType: SortByEnum = .none
     private var hit: Hit
+    
     var completion: ((String) -> Void)?
     var arrayHits: [Hit]? = nil {
         didSet {
             downView.smalCollectionView.reloadData()
         }
     }
+    
+    //MARK: - Init:
     
     init(_ hit: Hit) {
         self.hit = hit
@@ -30,6 +33,8 @@ class ImagePageViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    //MARK: - Life Cycle:
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,15 +46,19 @@ class ImagePageViewController: UIViewController {
         setCollectionView()
         setConstraint()
     }
-
-//MARK: - @objc func:
+    
+    //MARK: - @objc func:
     
     @objc func zoomImage() {
-        networkManager.downloadImage(fromLink: hit.largeImageURL) { img in
-            guard let imageDownLoad = img else {return}
-            DispatchQueue.main.async {
-                let imageVC = ImageViewController(imageDownLoad)
-                self.navigationController?.pushViewController(imageVC, animated: true)
+        networkManager.downloadImageFromUrl(hit.largeImageURL) { result in
+            switch result {
+            case .success(let img):
+                DispatchQueue.main.async {
+                    let imageVC = ImageViewController(img)
+                    self.navigationController?.pushViewController(imageVC, animated: true)
+                }
+            case .failure(_):
+                print(NetworkErrors.badURLtoImage)
             }
         }
     }
@@ -75,7 +84,7 @@ class ImagePageViewController: UIViewController {
         if let error = error {
             createAlert(error.localizedDescription)
         } else {
-            createAlert("Success download")
+            createAlert(TitleEnum.alertTitleSaveToGallary)
         }
     }
     
@@ -83,26 +92,26 @@ class ImagePageViewController: UIViewController {
         view.endEditing(true)
     }
     
-//MARK: -  private func:
+    //MARK: -  private func:
     
-   private func addTapGestureToHideKeyboard() {
+    private func addTapGestureToHideKeyboard() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         tapGesture.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapGesture)
     }
     
     private func alertDownload() {
-        let alert = UIAlertController(title: "Choose size for download", message: nil, preferredStyle: .actionSheet)
-        let previewSizeAction = UIAlertAction(title: "Preview size", style: .default) { _  in
-            self.downloadImage(self.hit.previewURL)
+        let alert = UIAlertController(title: TitleEnum.alertTitleChooseSize, message: nil, preferredStyle: .actionSheet)
+        let previewSizeAction = UIAlertAction(title: TitleEnum.alertPreviewSize, style: .default) { _  in
+            self.downloadImageToGallary(self.hit.previewURL)
         }
-        let webFormatAction = UIAlertAction(title: "Web Format size", style: .default) { _  in
-            self.downloadImage(self.hit.webformatURL)
+        let webFormatAction = UIAlertAction(title: TitleEnum.alertWebSize, style: .default) { _  in
+            self.downloadImageToGallary(self.hit.webformatURL)
         }
-        let largeSizeAction = UIAlertAction(title: "Large size", style: .default) { _  in
-            self.downloadImage(self.hit.largeImageURL)
+        let largeSizeAction = UIAlertAction(title: TitleEnum.alertLargeSize, style: .default) { _  in
+            self.downloadImageToGallary(self.hit.largeImageURL)
         }
-        let cancelAction = UIAlertAction(title: "Cansel", style: .destructive)
+        let cancelAction = UIAlertAction(title: TitleEnum.alertCancelButton, style: .destructive)
         alert.addAction(previewSizeAction)
         alert.addAction(webFormatAction)
         alert.addAction(largeSizeAction)
@@ -111,8 +120,8 @@ class ImagePageViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    private func downloadImage(_ urlSize: String) {
-        networkManager.fetchImageFromUrl(urlSize) { result in
+    private func downloadImageToGallary(_ urlSize: String) {
+        networkManager.downloadImageFromUrl(urlSize) { result in
             switch result {
             case .success(let image):
                 UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.imageSaveToPhotoLibrary(_:didFinishSavingWithError:contextInfo:)), nil)
@@ -125,7 +134,7 @@ class ImagePageViewController: UIViewController {
     
     private func createAlert(_ title: String) {
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Ok", style: .default)
+        let okAction = UIAlertAction(title: TitleEnum.alertOkButton, style: .default)
         alert.addAction(okAction)
         DispatchQueue.main.async {
             self.present(alert, animated: true)
@@ -133,7 +142,7 @@ class ImagePageViewController: UIViewController {
     }
     
     private func configureView() {
-        networkManager.fetchImageFromUrl(hit.previewURL) { result in
+        networkManager.downloadImageFromUrl(hit.previewURL) { result in
             switch result {
             case .success(let image):
                 DispatchQueue.main.async {
@@ -154,11 +163,11 @@ class ImagePageViewController: UIViewController {
     }
     
     private func setTopView() {
-        navigationController?.isNavigationBarHidden = true
-        view.addSubview(topView)
         topView.textField.delegate = self
-        view.backgroundColor = .white
         topView.translatesAutoresizingMaskIntoConstraints = false
+        navigationController?.isNavigationBarHidden = true
+        view.backgroundColor = .white
+        view.addSubview(topView)
     }
     
     private func setLargeImageView() {
@@ -227,61 +236,5 @@ extension ImagePageViewController: UITextFieldDelegate {
         navigationController?.popViewController(animated: true)
         view.endEditing(true)
         return true
-    }
-}
-
-//MARK: - Interactive Menu:
-
-extension ImagePageViewController {
-    
-    func interactiveSortMenu(sortetBy: String? = nil) -> UIMenu {
-        let downloadsAction = UIAction(title: SortByEnum.downloads.labelMenu, image: IconsEnum.downloadMenuImage) { action in
-            self.arrayHits?.sort(by: { downloadOne, downloadTwo in
-                downloadOne.downloads > downloadTwo.downloads
-            })
-            self.downView.smalCollectionView.scrollToItem(at: .init(item: 0, section: 0), at: .top, animated: true)
-            self.sortType = .downloads
-            self.topView.sortedButton.menu = self.interactiveSortMenu(sortetBy: action.title)
-        }
-        
-        let likesAction = UIAction(title: SortByEnum.likes.labelMenu, image: IconsEnum.likesMenuImage) { action in
-            self.arrayHits?.sort(by: { likesOne, likesTwo in
-                likesOne.likes > likesTwo.likes
-            })
-            self.downView.smalCollectionView.scrollToItem(at: .init(item: 0, section: 0), at: .top, animated: true)
-            self.sortType = .likes
-            self.topView.sortedButton.menu = self.interactiveSortMenu(sortetBy: action.title)
-        }
-        
-        let viewsAction = UIAction(title: SortByEnum.views.labelMenu, image: IconsEnum.viewMenuImage) { action in
-            self.arrayHits?.sort(by: { viewsOne, viewsTwo in
-                viewsOne.views > viewsTwo.views
-            })
-            self.sortType = .views
-            self.downView.smalCollectionView.scrollToItem(at: .init(item: 0, section: 0), at: .top, animated: true)
-            self.topView.sortedButton.menu = self.interactiveSortMenu(sortetBy: action.title)
-        }
-        
-        let commentsAction = UIAction(title: SortByEnum.comments.labelMenu, image: IconsEnum.commentsMenuImage) { action in
-            self.arrayHits?.sort(by: { commentsOne, commentsTwo in
-                commentsOne.comments > commentsTwo.comments
-            })
-            self.downView.smalCollectionView.scrollToItem(at: .init(item: 0, section: 0), at: .top, animated: true)
-            self.sortType = .comments
-            self.topView.sortedButton.menu = self.interactiveSortMenu(sortetBy: action.title)
-        }
-        
-        let menu = UIMenu(title: TitleEnum.titleMenu, image: UIImage(systemName: IconsEnum.menuImage), options: .singleSelection, children: [downloadsAction, likesAction, viewsAction, commentsAction])
-        
-        if let sortetBy = sortetBy {
-            menu.children.forEach { action in
-                guard let action = action as? UIAction else {return}
-                if action.title == sortetBy {
-                    action.state = .on
-                    action.attributes = .destructive
-                }
-            }
-        }
-        return menu
     }
 }

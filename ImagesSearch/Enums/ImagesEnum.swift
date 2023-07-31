@@ -23,4 +23,20 @@ enum ImagesEnum {
     
     //Icon For TopView
     static let backButtonImage = UIImage(named: "P")
+    
+    //Images for StartViewController
+    static let backgroundImage  = UIImage(named: "backgroundImage")
+    static let separatorImage   = UIImage(systemName: "poweron")
+    static let chevronDownImage = UIImage(systemName: "chevron.down")
+
+    static let menuAllImages    = UIImage(systemName: "photo.stack.fill")
+    static let menuPhotoImage   = UIImage(systemName: "photo.fill")
+    static let menuIllustrationImage = UIImage(systemName: "circle.hexagonpath.fill")
+    static let menuVectorImage       = UIImage(systemName: "arrow.up.forward")
+    
+    //ImageCell
+    static let shareButton = UIImage(named: "share")
+    
+    //LargeImageView (DetailScreen
+    static let zoomButtonImage = UIImage(systemName: "plus.magnifyingglass")
 }

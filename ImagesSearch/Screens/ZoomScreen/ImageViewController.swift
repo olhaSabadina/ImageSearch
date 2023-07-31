@@ -23,6 +23,8 @@ class ImageViewController: UIViewController {
     private var imageRightConstraint: NSLayoutConstraint!
     private var imageDownConstraint: NSLayoutConstraint!
     
+//MARK: - Init:
+    
     init(_ image: UIImage) {
         self.imageView.image = image
         super.init(nibName: nil, bundle: nil)
@@ -31,6 +33,8 @@ class ImageViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+//MARK: - Life Cycle:
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,7 +85,7 @@ class ImageViewController: UIViewController {
     private func setupCloseButton() {
         view.addSubview(closeButton)
         closeButton.translatesAutoresizingMaskIntoConstraints = false
-        closeButton.setImage(IconsEnum.closeButtonImage, for: .normal)
+        closeButton.setImage(ImagesEnum.closeButtonImage, for: .normal)
         closeButton.setBorderLayer(backgroundColor: .lightGray.withAlphaComponent(0.8), borderColor: .black, borderWidth: 1, cornerRadius: 15, tintColor: .white)
         closeButton.addTarget(self, action: #selector(closeImageVC), for: .touchUpInside)
     }
@@ -113,7 +117,8 @@ class ImageViewController: UIViewController {
                 self.scrollView.zoomScale = minScale
             }
         case .max:
-            UIView.animate(withDuration: 0.4) {                self.scrollView.zoomScale = 1
+            UIView.animate(withDuration: 0.4) {
+                self.scrollView.zoomScale = 1
             }
         }
     }
@@ -142,6 +147,8 @@ class ImageViewController: UIViewController {
         ])
     }
 }
+
+//MARK: - UIScrollViewDelegate
 
 extension ImageViewController: UIScrollViewDelegate {
     

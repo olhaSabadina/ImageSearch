@@ -34,7 +34,7 @@ struct NetworkManager {
         }.resume()
     }
     
-    func fetchImageFromUrl(_ url: String, completion: @escaping (Result<UIImage, Error>)->Void) {
+    func downloadImageFromUrl(_ url: String, completion: @escaping (Result<UIImage, Error>)->Void) {
         
         guard let url = URL(string: url) else {completion(.failure(NetworkErrors.badURLtoImage)); return}
         
@@ -47,29 +47,6 @@ struct NetworkManager {
             }
         }.resume()
     }
-    
-//    func downloadImage(fromLink link: String, completion: @escaping (UIImage?)->()) {
-//
-//        guard let url = URL(string: link) else {
-//            print(NetworkErrors.badURL)
-//            return completion(nil)
-//        }
-//
-//        URLSession.shared.dataTask(with: url) { data, response, error in
-//            guard let data = data, error == nil else {
-//                print(NetworkErrors.invalidData)
-//                return completion(nil)
-//            }
-//            guard let response = response as? HTTPURLResponse,
-//                  response.statusCode == 200,
-//                  let image = UIImage(data: data)
-//            else {
-//                print(NetworkErrors.responseStatusCodeError)
-//                return completion(nil)
-//            }
-//            return completion(image)
-//        }.resume()
-//    }
     
     private func parseJSON(data: Data) -> ImagesData? {
         let decoder = JSONDecoder()
