@@ -46,16 +46,7 @@ class SmallCell: UICollectionViewCell {
     }
     
     private func updateCellImage(_ urlWeb: String?) {
-        guard let urlString  = urlWeb else {return}
-        networkManager.downloadImageFromUrl(urlString) { result in
-            switch result {
-            case .success(let img):
-                DispatchQueue.main.async {
-                    self.smallImage.image = img
-                }
-            case .failure(_):
-                print(NetworkErrors.errorDownloadImage)
-            }
-        }
+        guard let url = URL(string: urlWeb ?? "") else {return}
+        smallImage.sd_setImage(with: url, placeholderImage: nil, options: [.continueInBackground, .progressiveLoad], completed: nil)
     }
 }

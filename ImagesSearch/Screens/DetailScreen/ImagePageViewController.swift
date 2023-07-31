@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ImagePageViewController: UIViewController {
     
@@ -142,16 +143,9 @@ class ImagePageViewController: UIViewController {
     }
     
     private func configureView() {
-        networkManager.downloadImageFromUrl(hit.previewURL) { result in
-            switch result {
-            case .success(let image):
-                DispatchQueue.main.async {
-                    self.largeImageView.imageView.image = image
-                }
-            case .failure(_):
-                print(NetworkErrors.errorDownloadImage)
-            }
-        }
+        let currentImageUrl = hit.previewURL
+        guard let url = URL(string: currentImageUrl) else {return}
+        largeImageView.imageView.sd_setImage(with: url, placeholderImage: nil, options: [.continueInBackground, .progressiveLoad], completed: nil)
     }
     
     private func addTargetForButton() {

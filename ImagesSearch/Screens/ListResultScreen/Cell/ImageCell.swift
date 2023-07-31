@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ImageCell: UICollectionViewCell {
     
@@ -50,19 +51,12 @@ class ImageCell: UICollectionViewCell {
     }
     
     private func setViewImage(_ hit: Hit?, _ sortBy: SortByEnum) {
-        networkManager.downloadImageFromUrl(hit?.previewURL ?? "") { result in
-            switch result {
-            case .success(let img):
-                DispatchQueue.main.async {
-                    self.searchImage.image = img
-                    self.reaсtionImageView.image = sortBy.reactoinImage
-                    self.countLabel.text = "\(sortBy.returnValue(hit))  "
-                    self.stackView.isHidden = sortBy == .none ? true : false
-                }
-            case .failure(_):
-                print(NetworkErrors.errorDownloadImage)
-            }
-        }
+        let currentImageUrl = hit?.previewURL ?? ""
+        guard let url = URL(string: currentImageUrl) else {return}
+        searchImage.sd_setImage(with: url, placeholderImage: nil, options: [.continueInBackground, .progressiveLoad], completed: nil)
+        reaсtionImageView.image = sortBy.reactoinImage
+        countLabel.text = "\(sortBy.returnValue(hit))  "
+        stackView.isHidden = sortBy == .none ? true : false
     }
     
     private func configureImage() {
