@@ -19,6 +19,7 @@ enum ImagesEnum {
     static let likesMenuImage = UIImage(systemName: "hand.thumbsup")
     static let viewMenuImage = UIImage(systemName: "eye")
     static let commentsMenuImage = UIImage(systemName: "ellipsis.message.fill")
+    static let cancelMenuImage = UIImage(systemName: "clear")
     static let closeButtonImage = UIImage(systemName:"xmark")
     
     //Icon For TopView

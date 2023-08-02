@@ -32,7 +32,7 @@ enum TitleEnum {
     static let alertCancelButton = "Cancel"
     
     //LargeImageView (DetailScreen)
-    static let downloadButton = " Dowmload "
+    static let downloadButton = " Download "
     static let titleShareButton = "    Share "
     
     

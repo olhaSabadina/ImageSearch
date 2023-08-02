@@ -19,8 +19,8 @@ class FindPictureViewController: UIViewController {
     var sortType: SortByEnum = .none
     var hitsArray: [Hit]? {
         didSet {
-            collectionView.scrollRectToVisible(.init(x: 0, y: 0, width: 100, height: 100), animated: true)
             collectionView.reloadData()
+            collectionView.scrollRectToVisible(.init(x: 0, y: 0, width: 100, height: 100), animated: true)
         }
     }
     

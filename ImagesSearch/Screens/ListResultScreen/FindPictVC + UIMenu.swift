@@ -39,7 +39,13 @@ extension FindPictureViewController {
             self.topView.sortedButton.menu = self.interactiveSortMenu(sortetBy: action.title)
         }
         
-        let menu = UIMenu(title: TitleEnum.titleMenu, image: ImagesEnum.sortedImage, options: .singleSelection, children: [downloadsAction, likesAction, viewsAction, commentsAction])
+        let canсelAction = UIAction(title: SortByEnum.none.labelMenu, image: ImagesEnum.cancelMenuImage) { action in
+            self.hitsArray?.shuffle()
+            self.sortType = .none
+            self.topView.sortedButton.menu = self.interactiveSortMenu(sortetBy: action.title)
+        }
+        
+        let menu = UIMenu(title: TitleEnum.titleMenu, image: ImagesEnum.sortedImage, options: .singleSelection, children: [downloadsAction, likesAction, viewsAction, commentsAction, canсelAction])
         
         if let sortetBy = sortetBy {
             menu.children.forEach { action in

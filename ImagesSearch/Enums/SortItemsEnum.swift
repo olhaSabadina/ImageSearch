@@ -26,7 +26,7 @@ enum SortByEnum {
         case .comments:
             return "Comments"
         case .none:
-            return ""
+            return "Cancel"
         }
     }
     
@@ -41,7 +41,7 @@ enum SortByEnum {
         case .comments:
             return ImagesEnum.commentsMenuImage
         case .none:
-            return nil
+            return ImagesEnum.cancelMenuImage
         }
     }
     
@@ -50,7 +50,7 @@ enum SortByEnum {
        
         switch self {
         case .none:
-            return 0
+            return hit.id // нужно вернуть всесь массив без сортировки
         case .downloads:
             return hit.downloads
         case .views:

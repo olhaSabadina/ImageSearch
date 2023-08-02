@@ -48,7 +48,15 @@ extension ImagePageViewController {
             self.topView.sortedButton.menu = self.interactiveSortMenu(sortetBy: action.title)
         }
         
-        let menu = UIMenu(title: TitleEnum.titleMenu, image: UIImage(systemName: ImagesEnum.menuImage), options: .singleSelection, children: [downloadsAction, likesAction, viewsAction, commentsAction])
+        let canсelAction = UIAction(title: SortByEnum.none.labelMenu, image: ImagesEnum.cancelMenuImage) { action in
+            self.arrayHits?.shuffle()
+            self.downView.smalCollectionView.scrollToItem(at: .init(item: 0, section: 0), at: .top, animated: true)
+            self.sortType = .none
+            self.topView.sortedButton.menu = self.interactiveSortMenu(sortetBy: action.title)
+        }
+        
+        
+        let menu = UIMenu(title: TitleEnum.titleMenu, image: UIImage(systemName: ImagesEnum.menuImage), options: .singleSelection, children: [downloadsAction, likesAction, viewsAction, commentsAction, canсelAction])
         
         if let sortetBy = sortetBy {
             menu.children.forEach { action in
