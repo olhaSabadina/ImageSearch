@@ -1,5 +1,5 @@
 //
-//  LargeImageView.swift
+//  PreviewImageView.swift
 //  ImagesSearch
 //
 //  Created by Olya Sabadina on 2023-07-24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LargeImageView: UIView {
+class PreviewImageView: UIView {
 
     let imageView = UIImageView()
     let zoomButton = UIButton(type: .system)
@@ -90,8 +90,8 @@ class LargeImageView: UIView {
     }
     
     private func setShareButton() {
-        shareButton.setTitle(TitleEnum.titleShareButton, for: .normal)
-        shareButton.setImage(ImagesEnum.shareButton, for: .normal)
+        shareButton.setTitle(TitleConstants.share, for: .normal)
+        shareButton.setImage(ImageConstants.share, for: .normal)
         shareButton.setBorderLayer(backgroundColor: .init(red: 107, green: 86, blue: 223, alpha: 1),
                                    borderColor: .darkGray,
                                    borderWidth: 1,
@@ -100,7 +100,7 @@ class LargeImageView: UIView {
     }
     
     private func setZoomButton() {
-        zoomButton.setImage(ImagesEnum.zoomButtonImage, for: .normal)
+        zoomButton.setImage(ImageConstants.zoom, for: .normal)
         zoomButton.translatesAutoresizingMaskIntoConstraints = false
         zoomButton.setBorderLayer(backgroundColor: .init(
             cgColor: .init(red: 226, green: 226, blue: 226, alpha: 1)),
@@ -112,9 +112,9 @@ class LargeImageView: UIView {
     }
     
     private func setDownloadButton() {
-        downloadButton.setTitle(TitleEnum.downloadButton, for: .normal)
+        downloadButton.setTitle(TitleConstants.download, for: .normal)
         downloadButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        downloadButton.setImage(ImagesEnum.downloadMenuImage, for: .normal)
+        downloadButton.setImage(ImageConstants.download, for: .normal)
         downloadButton.setTitleColor(.white, for: .normal)
         downloadButton.setBorderLayer(backgroundColor: .blue, borderColor: .black, borderWidth: 1, cornerRadius: 8, tintColor: .white)
         downloadButton.translatesAutoresizingMaskIntoConstraints = false

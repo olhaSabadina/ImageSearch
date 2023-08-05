@@ -16,7 +16,7 @@ extension FindPictureViewController {
         collectionView.dataSource = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(RelatedCell.self, forCellWithReuseIdentifier: RelatedCell.identCell)
-        collectionView.register(HeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionReusableView.headerIdentifier )
+        collectionView.register(HeaderCollectionView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionView.headerIdentifier )
         collectionView.register(ImageCell.self, forCellWithReuseIdentifier: ImageCell.identCell)
         view.addSubview(collectionView)
     }
@@ -80,7 +80,7 @@ extension FindPictureViewController: UICollectionViewDelegate, UICollectionViewD
         if section == 0 {
             return imagesDescription?.related.count ?? 1
         }
-        return hitsArray?.count ?? 0
+        return imagesArray?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -95,7 +95,7 @@ extension FindPictureViewController: UICollectionViewDelegate, UICollectionViewD
             //ImageCell
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.identCell, for: indexPath) as? ImageCell else {return UICollectionViewCell()}
             cell.sortType = sortType
-            cell.hit = hitsArray?[indexPath.item]
+            cell.imageToViewing = imagesArray?[indexPath.item]
             cell.shareButton.tag = indexPath.item
             cell.shareButton.addTarget(self, action: #selector(pushLink(_: )), for: .touchUpInside)
             return cell
@@ -109,21 +109,21 @@ extension FindPictureViewController: UICollectionViewDelegate, UICollectionViewD
             let cell = collectionView.cellForItem(at: indexPath) as? RelatedCell
             let textLabel = cell?.labelText.text ?? ""
             topView.textField.text = textLabel
-            findPicturesByWord(textLabel, typeImageFind)
+            findPicturesByWord(textLabel, findImageByType)
             
         } else if indexPath.section == 1 {
             //ImageCell
             let cell = collectionView.cellForItem(at: indexPath) as? ImageCell
             
-            guard let someHit = cell?.hit else {return}
+            guard let someHit = cell?.imageToViewing else {return}
             let imagePageVC = ImagePageViewController(someHit)
-            imagePageVC.arrayHits = hitsArray
+            imagePageVC.arrayImages = imagesArray
             navigationController?.pushViewController(imagePageVC, animated: true)
 
             imagePageVC.completion = {[weak self] searchWord in
                 guard let self = self else {return}
                 self.topView.textField.text = searchWord
-                self.findPicturesByWord(searchWord, self.typeImageFind)
+                self.findPicturesByWord(searchWord, self.findImageByType)
             }
         }
     }
@@ -131,7 +131,7 @@ extension FindPictureViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 
         if kind == UICollectionView.elementKindSectionHeader && indexPath.section == 0 {
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderCollectionReusableView.headerIdentifier, for: indexPath) as? HeaderCollectionReusableView else {return UICollectionReusableView()}
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderCollectionView.headerIdentifier, for: indexPath) as? HeaderCollectionView else {return UICollectionReusableView()}
             let totalImage = imagesDescription?.total ?? 0
             header.configTotalImageLabel(totalImage)
             return header

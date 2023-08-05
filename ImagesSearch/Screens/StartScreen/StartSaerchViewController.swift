@@ -7,7 +7,7 @@
 
 import UIKit
 
-class StartViewController: UIViewController {
+class StartSaerchViewController: UIViewController {
     
     let backgroundImageView = UIImageView()
     let titleLabel = UILabel()
@@ -15,9 +15,9 @@ class StartViewController: UIViewController {
     let searchTextField = UITextField()
     let searchButton = UIButton(type: .system)
     let imagesSearchButton = UIButton()
-    var typeImageFind: TypeEnum = .all {
+    var findImageByType: ImageType = .all {
         didSet {
-            imagesSearchButton.setTitle(typeImageFind.rawValue.capitalized, for: .normal)
+            imagesSearchButton.setTitle(findImageByType.rawValue.capitalized, for: .normal)
         }
     }
     
@@ -38,15 +38,15 @@ class StartViewController: UIViewController {
     @objc func openFindPictureVC() {
         let findPictureVC = FindPictureViewController()
         let findWord = searchTextField.text ?? ""
-        findPictureVC.typeImageFind = typeImageFind
-        findPictureVC.findPicturesByWord(findWord, typeImageFind)
+        findPictureVC.findImageByType = findImageByType
+        findPictureVC.findPicturesByWord(findWord, findImageByType)
         searchTextField.text = nil
         navigationController?.pushViewController(findPictureVC, animated: true)
     }
 }
 //MARK: - TextFieldDelegate:
 
-extension StartViewController: UITextFieldDelegate {
+extension StartSaerchViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         openFindPictureVC()
         view.endEditing(true)

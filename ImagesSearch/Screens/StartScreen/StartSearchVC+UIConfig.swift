@@ -1,5 +1,5 @@
 //
-//  StartVC + UIConfig.swift
+//  StartSearchVC+UIConfig.swift
 //  ImagesSearch
 //
 //  Created by Olya Sabadina on 2023-07-30.
@@ -9,7 +9,7 @@ import UIKit
 
 //MARK: - Set UIConfiguration & constraints:
 
-extension StartViewController {
+extension StartSaerchViewController {
     
     func configView() {
         setUpView()
@@ -57,7 +57,7 @@ extension StartViewController {
     }
     
     private func setBackgroundImageView() {
-        backgroundImageView.image = ImagesEnum.backgroundImage
+        backgroundImageView.image = ImageConstants.background
         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(backgroundImageView)
     }
@@ -65,7 +65,7 @@ extension StartViewController {
     private func setTitleLabel() {
         titleLabel.font = UIFont.boldSystemFont(ofSize: 35)
         titleLabel.textAlignment = .center
-        titleLabel.text = TitleEnum.mainScreenTopTitle
+        titleLabel.text = TitleConstants.mainScreenTop
         titleLabel.textColor = .white
         titleLabel.numberOfLines = 0
         titleLabel.adjustsFontSizeToFitWidth = true
@@ -76,7 +76,7 @@ extension StartViewController {
     private func setDownLabel() {
         downLabel.font = UIFont.boldSystemFont(ofSize: 13)
         downLabel.textAlignment = .center
-        downLabel.text = TitleEnum.mainScreenDownTitle
+        downLabel.text = TitleConstants.mainScreenDown
         downLabel.textColor = .white
         downLabel.adjustsFontSizeToFitWidth = true
         downLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -85,19 +85,19 @@ extension StartViewController {
     
     private func setSearchTextField() {
         searchTextField.delegate = self
-        searchTextField.placeholder = TitleEnum.placeholderTextField
+        searchTextField.placeholder = TitleConstants.placeholderTextField
         searchTextField.returnKeyType = .search
         searchTextField.font = .systemFont(ofSize: 18)
         searchTextField.autocapitalizationType = .none
         searchTextField.autocorrectionType = .no
         searchTextField.setBorderLayer(backgroundColor: .secondarySystemBackground, borderColor: .black, borderWidth: 1, cornerRadius: 8, tintColor: nil)
         searchTextField.translatesAutoresizingMaskIntoConstraints = false
-        searchTextField.setLeftImageOnTextField(ImagesEnum.magnifyingglass, tintColor: .secondaryLabel)
+        searchTextField.setLeftImageOnTextField(ImageConstants.magnifyingglass, tintColor: .secondaryLabel)
         view.addSubview(searchTextField)
     }
  
     private func setRightButtonOnTextField() {
-        let separatorImageView = UIImageView(image: ImagesEnum.separatorImage)
+        let separatorImageView = UIImageView(image: ImageConstants.separator)
         separatorImageView.widthAnchor.constraint(equalToConstant: 2).isActive = true
         separatorImageView.alpha = 0.5
         let stackView = UIStackView(arrangedSubviews: [separatorImageView,imagesSearchButton])
@@ -111,9 +111,9 @@ extension StartViewController {
     }
     
     private func setImagesSearchButton() {
-        imagesSearchButton.setTitle(typeImageFind.labelButton, for: .normal)
+        imagesSearchButton.setTitle(findImageByType.labelButton, for: .normal)
         imagesSearchButton.setTitleColor(.secondaryLabel, for: .normal)
-        imagesSearchButton.setImage(ImagesEnum.chevronDownImage, for: .normal)
+        imagesSearchButton.setImage(ImageConstants.chevronDown, for: .normal)
         imagesSearchButton.titleLabel?.font = .systemFont(ofSize: 15)
         imagesSearchButton.tintColor = .secondaryLabel
         imagesSearchButton.titleLabel?.adjustsFontSizeToFitWidth = true
@@ -125,7 +125,7 @@ extension StartViewController {
     private func setupSearchButton(){
         searchButton.setTitle("  Search", for: .normal)
         searchButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        searchButton.setImage(ImagesEnum.magnifyingglass, for: .normal)
+        searchButton.setImage(ImageConstants.magnifyingglass, for: .normal)
         searchButton.setTitleColor(.white, for: .normal)
         searchButton.setBorderLayer(backgroundColor: .blue, borderColor: .black, borderWidth: 1, cornerRadius: 8, tintColor: .white)
         searchButton.addTarget(self, action: #selector(openFindPictureVC), for: .touchUpInside)

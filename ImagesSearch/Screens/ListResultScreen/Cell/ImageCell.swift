@@ -12,17 +12,16 @@ class ImageCell: UICollectionViewCell {
     
     static var identCell = "imageCell"
   
-    private let networkManager = NetworkManager()
     private let searchImage = UIImageView()
     private let reaсtionImageView = UIImageView()
     private var stackView = UIStackView()
     private var countLabel = UILabel()
     
     let shareButton = UIButton()
-    var sortType: SortByEnum = .none
-    var hit: Hit? = nil {
+    var sortType: SortModel = .none
+    var imageToViewing: ImageDescription? = nil {
         didSet {
-            setViewImage(hit, sortType)
+            setViewImage(imageToViewing, sortType)
         }
     }
     
@@ -50,11 +49,11 @@ class ImageCell: UICollectionViewCell {
         searchImage.image = nil
     }
     
-    private func setViewImage(_ hit: Hit?, _ sortBy: SortByEnum) {
+    private func setViewImage(_ hit: ImageDescription?, _ sortBy: SortModel) {
         let currentImageUrl = hit?.previewURL ?? ""
         guard let url = URL(string: currentImageUrl) else {return}
         searchImage.sd_setImage(with: url, placeholderImage: nil, options: [.continueInBackground, .progressiveLoad], completed: nil)
-        reaсtionImageView.image = sortBy.reactoinImage
+        reaсtionImageView.image = sortBy.imageSortModelCases
         countLabel.text = "\(sortBy.returnValue(hit))  "
         stackView.isHidden = sortBy == .none ? true : false
     }
@@ -68,7 +67,7 @@ class ImageCell: UICollectionViewCell {
     
     private func configureShareButton() {
         addSubview(shareButton)
-        shareButton.setImage(ImagesEnum.shareButton, for: .normal)
+        shareButton.setImage(ImageConstants.share, for: .normal)
         shareButton.translatesAutoresizingMaskIntoConstraints = false
         shareButton.setBorderLayer(backgroundColor: .init(
             cgColor: .init(red: 226, green: 226, blue: 226, alpha: 1)),

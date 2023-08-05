@@ -1,5 +1,5 @@
 //
-//  SortItemsEnum.swift
+//  SortModel.swift
 //  ImagesSearch
 //
 //  Created by Olya Sabadina on 2023-07-24.
@@ -8,14 +8,14 @@
 import Foundation
 import UIKit
 
-enum SortByEnum {
+enum SortModel {
     case none
     case downloads
     case views
     case likes
     case comments
     
-    var labelMenu: String {
+    var titleSortModelCases: String {
         switch self {
         case .downloads:
             return "Downloads"
@@ -30,27 +30,27 @@ enum SortByEnum {
         }
     }
     
-    var reactoinImage: UIImage? {
+    var imageSortModelCases: UIImage? {
         switch self {
         case .downloads:
-            return ImagesEnum.downloadMenuImage
+            return ImageConstants.download
         case .views:
-            return ImagesEnum.viewMenuImage
+            return ImageConstants.view
         case .likes:
-            return ImagesEnum.likesMenuImage
+            return ImageConstants.likes
         case .comments:
-            return ImagesEnum.commentsMenuImage
+            return ImageConstants.comments
         case .none:
-            return ImagesEnum.cancelMenuImage
+            return ImageConstants.cancel
         }
     }
     
-    func returnValue(_ hit: Hit?) -> Int {
+    func returnValue(_ hit: ImageDescription?) -> Int {
          guard let hit = hit else {return 0}
        
         switch self {
         case .none:
-            return hit.id // нужно вернуть всесь массив без сортировки
+            return hit.id
         case .downloads:
             return hit.downloads
         case .views:

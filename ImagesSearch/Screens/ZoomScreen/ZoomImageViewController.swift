@@ -1,5 +1,5 @@
 //
-//  ImageViewController.swift
+//  ZoomImageViewController.swift
 //  ImagesSearch
 //
 //  Created by Olya Sabadina on 2023-07-28.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ImageViewController: UIViewController {
+class ZoomImageViewController: UIViewController {
 
     private enum ScaleMode {
         case min
@@ -85,7 +85,7 @@ class ImageViewController: UIViewController {
     private func setupCloseButton() {
         view.addSubview(closeButton)
         closeButton.translatesAutoresizingMaskIntoConstraints = false
-        closeButton.setImage(ImagesEnum.closeButtonImage, for: .normal)
+        closeButton.setImage(ImageConstants.close, for: .normal)
         closeButton.setBorderLayer(backgroundColor: .lightGray.withAlphaComponent(0.8), borderColor: .black, borderWidth: 1, cornerRadius: 15, tintColor: .white)
         closeButton.addTarget(self, action: #selector(closeImageVC), for: .touchUpInside)
     }
@@ -150,7 +150,7 @@ class ImageViewController: UIViewController {
 
 //MARK: - UIScrollViewDelegate
 
-extension ImageViewController: UIScrollViewDelegate {
+extension ZoomImageViewController: UIScrollViewDelegate {
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView

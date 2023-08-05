@@ -15,9 +15,9 @@ class FindPictureViewController: UIViewController {
     var imagesDescription: ImagesData? = nil
     var collectionView : UICollectionView! = nil
     let topView = TopView()
-    var typeImageFind: TypeEnum = .all
-    var sortType: SortByEnum = .none
-    var hitsArray: [Hit]? {
+    var findImageByType: ImageType = .all
+    var sortType: SortModel = .none
+    var imagesArray: [ImageDescription]? {
         didSet {
             collectionView.reloadData()
             collectionView.scrollRectToVisible(.init(x: 0, y: 0, width: 100, height: 100), animated: true)
@@ -37,14 +37,14 @@ class FindPictureViewController: UIViewController {
     
     //MARK: - Functions:
     
-    func findPicturesByWord(_ findPictures: String, _ findImageType: TypeEnum) {
+    func findPicturesByWord(_ findPictures: String, _ findImageType: ImageType) {
         let requestString = findPictures.replaceSpaceToPlus()
-        networkManager.fetchData(findPictures: requestString, imageType: typeImageFind) { result in
+        networkManager.fetchData(findPictures: requestString, imageType: findImageByType) { result in
             switch result {
             case .success(let imgData):
                 DispatchQueue.main.async {
                     self.imagesDescription = imgData
-                    self.hitsArray = imgData?.hits
+                    self.imagesArray = imgData?.hits
                 }
             case .failure(_):
                 self.alertNotData()
@@ -59,8 +59,8 @@ class FindPictureViewController: UIViewController {
     }
     
     @objc func pushLink(_ sender: UIButton ) {
-        let hitUrl = hitsArray?[sender.tag].largeImageURL ?? ""
-        shareURL(hitUrl)
+        let hitUrl = imagesArray?[sender.tag].largeImageURL ?? ""
+        shareFromURL(hitUrl)
     }
     
     @objc func backToStartVC() {
@@ -76,8 +76,8 @@ class FindPictureViewController: UIViewController {
     }
     
     private func alertNotData() {
-        let alert = UIAlertController(title: TitleEnum.alertTitleNoData, message: nil, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: TitleEnum.alertOkButton, style: .default) { _ in
+        let alert = UIAlertController(title: TitleConstants.noData, message: nil, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: TitleConstants.Ok, style: .default) { _ in
             self.topView.textField.text = ""
         }
         alert.addAction(okAction)
@@ -105,7 +105,7 @@ class FindPictureViewController: UIViewController {
 extension FindPictureViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let findPicturesString = textField.text ?? ""
-        findPicturesByWord(findPicturesString, typeImageFind)
+        findPicturesByWord(findPicturesString, findImageByType)
         view.endEditing(true)
         return true
     }

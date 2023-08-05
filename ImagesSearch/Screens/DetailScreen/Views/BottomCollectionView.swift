@@ -1,5 +1,5 @@
 //
-//  SmallCollectionView.swift
+//  BottomCollectionView.swift
 //  ImagesSearch
 //
 //  Created by Olya Sabadina on 2023-07-27.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-class SmallCollectionView: UIView {
+class BottomCollectionView: UIView {
     
-    var smalCollectionView: UICollectionView! = nil
+    var bottomCollectionView: UICollectionView! = nil
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,7 +23,7 @@ class SmallCollectionView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        smalCollectionView.frame = self.bounds
+        bottomCollectionView.frame = self.bounds
     }
     
 //MARK: - Private func:
@@ -33,8 +33,8 @@ class SmallCollectionView: UIView {
     }
     
     private func setCollectionView() {
-        smalCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
-        addSubview(smalCollectionView)
+        bottomCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        addSubview(bottomCollectionView)
     }
     
     private func createLayout() -> UICollectionViewLayout {

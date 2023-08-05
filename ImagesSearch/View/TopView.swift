@@ -51,7 +51,7 @@ class TopView: UIView {
     }
     
     private func setTextField() {
-        textField.placeholder = TitleEnum.placeHolderTF
+        textField.placeholder = TitleConstants.placeHolderTF
         textField.font = .systemFont(ofSize: 18)
         textField.autocapitalizationType = .none
         textField.returnKeyType = .search
@@ -61,7 +61,7 @@ class TopView: UIView {
     }
 
     private func setLeftImageOnTextField() {
-        let leftImageOnTF = UIImageView(image: ImagesEnum.magnifyingglass)
+        let leftImageOnTF = UIImageView(image: ImageConstants.magnifyingglass)
         leftImageOnTF.tintColor = .secondaryLabel
         leftImageOnTF.frame = CGRect(x: 10, y: 8, width: 20, height: 20)
         let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
@@ -71,13 +71,13 @@ class TopView: UIView {
     }
     
     private func setBackButton() {
-        backButton.setImage(ImagesEnum.backButtonImage, for: .normal)
+        backButton.setImage(ImageConstants.back, for: .normal)
         backButton.setBorderLayer(backgroundColor: .blue, borderColor: .lightText, borderWidth: 1, cornerRadius: 4, tintColor: .white)
         backButton.heightAnchor.constraint(equalTo: backButton.widthAnchor).isActive = true
     }
     
     private func  setSortedButton() {
-        sortedButton.setImage(ImagesEnum.sortedImage, for: .normal)
+        sortedButton.setImage(ImageConstants.sorted, for: .normal)
         sortedButton.setBorderLayer(backgroundColor: .clear, borderColor: .lightGray.withAlphaComponent(0.4), borderWidth: 1, cornerRadius: 4, tintColor: .black)
         sortedButton.heightAnchor.constraint(equalTo: sortedButton.widthAnchor).isActive = true
         sortedButton.showsMenuAsPrimaryAction = true

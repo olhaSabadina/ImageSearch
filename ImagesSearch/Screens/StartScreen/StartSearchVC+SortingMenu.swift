@@ -1,5 +1,5 @@
 //
-//  StartViewController + UIMenu.swift
+//  StartSearchVC+SortingMenu.swift
 //  ImagesSearch
 //
 //  Created by Olya Sabadina on 2023-07-30.
@@ -7,27 +7,27 @@
 
 import UIKit
 
-extension StartViewController {
+extension StartSaerchViewController {
     
     func createMenu(typePicture: String? = nil) -> UIMenu {
-        let allAction = UIAction(title: TypeEnum.all.labelButton, image: ImagesEnum.menuAllImages, attributes: .keepsMenuPresented) { action in
-            self.typeImageFind = .all
+        let allAction = UIAction(title: ImageType.all.labelButton, image: ImageConstants.allImages, attributes: .keepsMenuPresented) { action in
+            self.findImageByType = .all
             self.imagesSearchButton.menu = self.createMenu(typePicture: action.title)
         }
-        let photoAction = UIAction(title: TypeEnum.photo.labelButton, image: ImagesEnum.menuPhotoImage) { action in
-            self.typeImageFind = .photo
+        let photoAction = UIAction(title: ImageType.photo.labelButton, image: ImageConstants.photo) { action in
+            self.findImageByType = .photo
             self.imagesSearchButton.menu = self.createMenu(typePicture: action.title)
         }
-        let illustrationAction = UIAction(title: TypeEnum.illustration.labelButton, image: ImagesEnum.menuIllustrationImage) { action in
-            self.typeImageFind = .illustration
+        let illustrationAction = UIAction(title: ImageType.illustration.labelButton, image: ImageConstants.illustration) { action in
+            self.findImageByType = .illustration
             self.imagesSearchButton.menu = self.createMenu(typePicture: action.title)
         }
-        let vectorAction = UIAction(title: TypeEnum.vectorSVG.labelButton, image: ImagesEnum.menuVectorImage) { action in
-            self.typeImageFind = .vectorSVG
+        let vectorAction = UIAction(title: ImageType.vectorSVG.labelButton, image: ImageConstants.vector) { action in
+            self.findImageByType = .vectorSVG
             self.imagesSearchButton.menu = self.createMenu(typePicture: action.title)
         }
         
-        let menu = UIMenu(title: TitleEnum.menuTitle, image: nil, options: .singleSelection, children: [allAction, photoAction, illustrationAction, vectorAction])
+        let menu = UIMenu(title: TitleConstants.menuTitle, image: nil, options: .singleSelection, children: [allAction, photoAction, illustrationAction, vectorAction])
         
         if let typePicture = typePicture {
             menu.children.forEach { action in

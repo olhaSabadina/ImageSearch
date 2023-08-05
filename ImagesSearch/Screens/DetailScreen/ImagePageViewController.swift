@@ -11,23 +11,23 @@ import SDWebImage
 class ImagePageViewController: UIViewController {
     
     private let networkManager = NetworkManager()
+    private let previewImageView = PreviewImageView()
+    private var imageDescription: ImageDescription
     let topView  = TopView()
-    private let largeImageView = LargeImageView()
-    let downView = SmallCollectionView()
-    var sortType: SortByEnum = .none
-    private var hit: Hit
+    let downView = BottomCollectionView()
+    var sortType: SortModel = .none
     
     var completion: ((String) -> Void)?
-    var arrayHits: [Hit]? = nil {
+    var arrayImages: [ImageDescription]? = nil {
         didSet {
-            downView.smalCollectionView.reloadData()
+            downView.bottomCollectionView.reloadData()
         }
     }
     
     //MARK: - Init:
     
-    init(_ hit: Hit) {
-        self.hit = hit
+    init(_ hit: ImageDescription) {
+        self.imageDescription = hit
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -51,11 +51,11 @@ class ImagePageViewController: UIViewController {
     //MARK: - @objc func:
     
     @objc func zoomImage() {
-        networkManager.downloadImageFromUrl(hit.largeImageURL) { result in
+        networkManager.downloadImageFromUrl(imageDescription.largeImageURL) { result in
             switch result {
             case .success(let img):
                 DispatchQueue.main.async {
-                    let imageVC = ImageViewController(img)
+                    let imageVC = ZoomImageViewController(img)
                     self.navigationController?.pushViewController(imageVC, animated: true)
                 }
             case .failure(_):
@@ -65,15 +65,11 @@ class ImagePageViewController: UIViewController {
     }
     
     @objc func sharePreviewImage() {
-        let url = hit.previewURL
-        navigationController?.viewControllers.forEach({ item in
-            if let findVC = item as? FindPictureViewController {
-                findVC.shareURL(url)
-            }
-        })
+        let url = imageDescription.previewURL
+        shareFromURL(url)
     }
     
-    @objc func downloadImageActoin() {
+    @objc func downloadImageAction() {
         alertDownload()
     }
     
@@ -85,7 +81,7 @@ class ImagePageViewController: UIViewController {
         if let error = error {
             createAlert(error.localizedDescription)
         } else {
-            createAlert(TitleEnum.alertTitleSaveToGallary)
+            createAlert(TitleConstants.saveToGallary)
         }
     }
     
@@ -102,17 +98,17 @@ class ImagePageViewController: UIViewController {
     }
     
     private func alertDownload() {
-        let alert = UIAlertController(title: TitleEnum.alertTitleChooseSize, message: nil, preferredStyle: .actionSheet)
-        let previewSizeAction = UIAlertAction(title: TitleEnum.alertPreviewSize, style: .default) { _  in
-            self.downloadImageToGallary(self.hit.previewURL)
+        let alert = UIAlertController(title: TitleConstants.chooseSize, message: nil, preferredStyle: .actionSheet)
+        let previewSizeAction = UIAlertAction(title: TitleConstants.previewSize, style: .default) { _  in
+            self.downloadImageToGallery(self.imageDescription.previewURL)
         }
-        let webFormatAction = UIAlertAction(title: TitleEnum.alertWebSize, style: .default) { _  in
-            self.downloadImageToGallary(self.hit.webformatURL)
+        let webFormatAction = UIAlertAction(title: TitleConstants.webSize, style: .default) { _  in
+            self.downloadImageToGallery(self.imageDescription.webformatURL)
         }
-        let largeSizeAction = UIAlertAction(title: TitleEnum.alertLargeSize, style: .default) { _  in
-            self.downloadImageToGallary(self.hit.largeImageURL)
+        let largeSizeAction = UIAlertAction(title: TitleConstants.largeSize, style: .default) { _  in
+            self.downloadImageToGallery(self.imageDescription.largeImageURL)
         }
-        let cancelAction = UIAlertAction(title: TitleEnum.alertCancelButton, style: .destructive)
+        let cancelAction = UIAlertAction(title: TitleConstants.cancel, style: .destructive)
         alert.addAction(previewSizeAction)
         alert.addAction(webFormatAction)
         alert.addAction(largeSizeAction)
@@ -121,7 +117,7 @@ class ImagePageViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    private func downloadImageToGallary(_ urlSize: String) {
+    private func downloadImageToGallery(_ urlSize: String) {
         networkManager.downloadImageFromUrl(urlSize) { result in
             switch result {
             case .success(let image):
@@ -135,7 +131,7 @@ class ImagePageViewController: UIViewController {
     
     private func createAlert(_ title: String) {
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: TitleEnum.alertOkButton, style: .default)
+        let okAction = UIAlertAction(title: TitleConstants.Ok, style: .default)
         alert.addAction(okAction)
         DispatchQueue.main.async {
             self.present(alert, animated: true)
@@ -143,16 +139,16 @@ class ImagePageViewController: UIViewController {
     }
     
     private func configureView() {
-        let currentImageUrl = hit.previewURL
+        let currentImageUrl = imageDescription.previewURL
         guard let url = URL(string: currentImageUrl) else {return}
-        largeImageView.imageView.sd_setImage(with: url, placeholderImage: nil, options: [.continueInBackground, .progressiveLoad], completed: nil)
+        previewImageView.imageView.sd_setImage(with: url, placeholderImage: nil, options: [.continueInBackground, .progressiveLoad], completed: nil)
     }
     
     private func addTargetForButton() {
         topView.backButton.addTarget(self, action: #selector(backToPreviousVC), for: .touchUpInside)
-        largeImageView.zoomButton.addTarget(self, action: #selector(zoomImage), for: .touchUpInside)
-        largeImageView.shareButton.addTarget(self, action: #selector(sharePreviewImage), for: .touchUpInside)
-        largeImageView.downloadButton.addTarget(self, action: #selector(downloadImageActoin), for: .touchUpInside)
+        previewImageView.zoomButton.addTarget(self, action: #selector(zoomImage), for: .touchUpInside)
+        previewImageView.shareButton.addTarget(self, action: #selector(sharePreviewImage), for: .touchUpInside)
+        previewImageView.downloadButton.addTarget(self, action: #selector(downloadImageAction), for: .touchUpInside)
         topView.sortedButton.menu = interactiveSortMenu()
     }
     
@@ -165,16 +161,16 @@ class ImagePageViewController: UIViewController {
     }
     
     private func setLargeImageView() {
-        view.addSubview(largeImageView)
-        largeImageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(previewImageView)
+        previewImageView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func setCollectionView() {
         view.addSubview(downView)
         downView.translatesAutoresizingMaskIntoConstraints = false
-        downView.smalCollectionView.register(SmallCell.self, forCellWithReuseIdentifier: SmallCell.identCell)
-        downView.smalCollectionView.delegate = self
-        downView.smalCollectionView.dataSource = self
+        downView.bottomCollectionView.register(BottomCollectionCell.self, forCellWithReuseIdentifier: BottomCollectionCell.identCell)
+        downView.bottomCollectionView.delegate = self
+        downView.bottomCollectionView.dataSource = self
     }
 }
 
@@ -182,19 +178,19 @@ class ImagePageViewController: UIViewController {
 
 extension ImagePageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        arrayHits?.count ?? 0
+        arrayImages?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SmallCell.identCell, for: indexPath) as? SmallCell else {return UICollectionViewCell()}
-        cell.hit = arrayHits?[indexPath.item]
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BottomCollectionCell.identCell, for: indexPath) as? BottomCollectionCell else {return UICollectionViewCell()}
+        cell.imageDescription = arrayImages?[indexPath.item]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as? SmallCell
-        guard let newHit = cell?.hit else {return}
-        hit = newHit
+        let cell = collectionView.cellForItem(at: indexPath) as? BottomCollectionCell
+        guard let newHit = cell?.imageDescription else {return}
+        imageDescription = newHit
         configureView()
     }
 }
@@ -209,12 +205,12 @@ extension ImagePageViewController {
             topView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             topView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            largeImageView.topAnchor.constraint(equalTo: topView.bottomAnchor),
-            largeImageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
-            largeImageView.leadingAnchor.constraint(equalTo: topView.leadingAnchor),
-            largeImageView.trailingAnchor.constraint(equalTo: topView.trailingAnchor),
+            previewImageView.topAnchor.constraint(equalTo: topView.bottomAnchor),
+            previewImageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
+            previewImageView.leadingAnchor.constraint(equalTo: topView.leadingAnchor),
+            previewImageView.trailingAnchor.constraint(equalTo: topView.trailingAnchor),
             
-            downView.topAnchor.constraint(equalTo: largeImageView.bottomAnchor),
+            downView.topAnchor.constraint(equalTo: previewImageView.bottomAnchor),
             downView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             downView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             downView.bottomAnchor.constraint(equalTo: view.bottomAnchor)

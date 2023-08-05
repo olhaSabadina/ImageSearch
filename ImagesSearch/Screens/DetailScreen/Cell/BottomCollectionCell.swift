@@ -1,5 +1,5 @@
 //
-//  SmallCell.swift
+//  BottomCollectionCell.swift
 //  ImagesSearch
 //
 //  Created by Olya Sabadina on 2023-07-27.
@@ -7,16 +7,16 @@
 
 import UIKit
 
-class SmallCell: UICollectionViewCell {
+class BottomCollectionCell: UICollectionViewCell {
 
     static var identCell = "SmallCell"
   
-    private let networkManager = NetworkManager()
-    private let smallImage = UIImageView()
+//    private let networkManager = NetworkManager()
+    private let previewImage = UIImageView()
    
-    var hit: Hit? = nil {
+    var imageDescription: ImageDescription? = nil {
         didSet {
-            updateCellImage(hit?.previewURL)
+            updateCellImage(imageDescription?.previewURL)
         }
     }
     
@@ -27,7 +27,7 @@ class SmallCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        smallImage.frame = bounds
+        previewImage.frame = bounds
     }
     
     required init?(coder: NSCoder) {
@@ -36,17 +36,17 @@ class SmallCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        smallImage.image = nil
+        previewImage.image = nil
     }
     
     private func configureImage() {
-        addSubview(smallImage)
-        smallImage.contentMode = .scaleAspectFill
-        smallImage.clipsToBounds = true
+        addSubview(previewImage)
+        previewImage.contentMode = .scaleAspectFill
+        previewImage.clipsToBounds = true
     }
     
     private func updateCellImage(_ urlWeb: String?) {
         guard let url = URL(string: urlWeb ?? "") else {return}
-        smallImage.sd_setImage(with: url, placeholderImage: nil, options: [.continueInBackground, .progressiveLoad], completed: nil)
+        previewImage.sd_setImage(with: url, placeholderImage: nil, options: [.continueInBackground, .progressiveLoad], completed: nil)
     }
 }

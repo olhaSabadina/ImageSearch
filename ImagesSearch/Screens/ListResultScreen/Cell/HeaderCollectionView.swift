@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HeaderCollectionReusableView: UICollectionReusableView {
+class HeaderCollectionView: UICollectionReusableView {
     
     static let headerIdentifier = "totalImage"
     

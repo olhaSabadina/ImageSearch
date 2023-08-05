@@ -9,18 +9,18 @@ import Foundation
 // MARK: - ImagesData
 struct ImagesData: Codable {
     let total, totalHits: Int
-    var hits: [Hit]
+    var hits: [ImageDescription]
     var related: [String] {
-        guard  hits.count != 0 && hits[0].tags != "" else {return []}
+        guard  hits.count != 0 && hits.first != nil else {return []}
         return hits[0].tags.transformRelatedToArray()
     }
 }
 
-// MARK: - Hit
-struct Hit: Codable {
+// MARK: - ImageDescription
+struct ImageDescription: Codable {
     let id: Int
     let pageURL: String
-    let type: TypeEnum
+    let type: ImageType
     let tags: String
     let previewURL: String
     let previewWidth, previewHeight: Int
@@ -40,7 +40,7 @@ struct Hit: Codable {
     }
 }
 
-enum TypeEnum: String, Codable {
+enum ImageType: String, Codable {
     case all = "all"
     case photo = "photo"
     case illustration = "illustration"

@@ -1,16 +1,15 @@
 //
-//  Share+Extension.swift
+//  ViewController+Share.swift
 //  ImagesSearch
 //
-//  Created by Olya Sabadina on 2023-07-26.
+//  Created by Olya Sabadina on 2023-08-05.
 //
 
 import UIKit
-import Foundation
 
-extension FindPictureViewController {
+extension UIViewController {
     
-    func shareURL(_ imageUrl: String, _ image: UIImage? = nil) {
+    func shareFromURL(_ imageUrl: String, _ image: UIImage? = nil) {
         guard let url = URL(string: imageUrl) else {return}
         let activityItems: [Any] = image == nil ? [url] : [url, image ?? UIImage()]
         
@@ -19,3 +18,6 @@ extension FindPictureViewController {
         self.present(activityViewController, animated: true, completion: nil)
     }
 }
+
+
+
