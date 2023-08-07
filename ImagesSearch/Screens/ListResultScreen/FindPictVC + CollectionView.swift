@@ -11,14 +11,14 @@ extension FindPictureViewController {
     
     func setCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
-        collectionView.backgroundColor = .white
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(RelatedCell.self, forCellWithReuseIdentifier: RelatedCell.identCell)
-        collectionView.register(HeaderCollectionView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionView.headerIdentifier )
-        collectionView.register(ImageCell.self, forCellWithReuseIdentifier: ImageCell.identCell)
-        view.addSubview(collectionView)
+        collectionView?.backgroundColor = .white
+        collectionView?.delegate = self
+        collectionView?.dataSource = self
+        collectionView?.translatesAutoresizingMaskIntoConstraints = false
+        collectionView?.register(RelatedCell.self, forCellWithReuseIdentifier: RelatedCell.identCell)
+        collectionView?.register(HeaderCollectionView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionView.headerIdentifier )
+        collectionView?.register(ImageCell.self, forCellWithReuseIdentifier: ImageCell.identCell)
+        view.addSubview(collectionView ?? UICollectionView())
     }
     
 //  MARK: - CollectionViewLayout:

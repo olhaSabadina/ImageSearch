@@ -13,14 +13,14 @@ class FindPictureViewController: UIViewController {
     private let networkManager = NetworkManager()
     
     var imagesDescription: ImagesData? = nil
-    var collectionView : UICollectionView! = nil
+    var collectionView : UICollectionView?
     let topView = TopView()
     var findImageByType: ImageType = .all
     var sortType: SortModel = .none
     var imagesArray: [ImageDescription]? {
         didSet {
-            collectionView.reloadData()
-            collectionView.scrollRectToVisible(.init(x: 0, y: 0, width: 100, height: 100), animated: true)
+            collectionView?.reloadData()
+            collectionView?.scrollRectToVisible(.init(x: 0, y: 0, width: 100, height: 100), animated: true)
         }
     }
     
@@ -115,16 +115,17 @@ extension FindPictureViewController: UITextFieldDelegate {
 
 extension FindPictureViewController {
     func setConstraint() {
+        guard let collView = collectionView else {return}
         NSLayoutConstraint.activate([
             topView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             topView.heightAnchor.constraint(equalToConstant: 80),
             topView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             topView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            collectionView.topAnchor.constraint(equalTo: topView.bottomAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            collView.topAnchor.constraint(equalTo: topView.bottomAnchor),
+            collView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            collView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
 }
