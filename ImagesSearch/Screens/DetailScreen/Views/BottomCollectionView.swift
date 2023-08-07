@@ -9,7 +9,7 @@ import UIKit
 
 class BottomCollectionView: UIView {
     
-    var bottomCollectionView: UICollectionView! = nil
+    var bottomCollectionView: UICollectionView?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,7 +23,7 @@ class BottomCollectionView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        bottomCollectionView.frame = self.bounds
+        bottomCollectionView?.frame = self.bounds
     }
     
 //MARK: - Private func:
@@ -34,7 +34,7 @@ class BottomCollectionView: UIView {
     
     private func setCollectionView() {
         bottomCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
-        addSubview(bottomCollectionView)
+        addSubview(bottomCollectionView ?? UICollectionView())
     }
     
     private func createLayout() -> UICollectionViewLayout {

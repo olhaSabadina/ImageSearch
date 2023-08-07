@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		207C8AD12A80E0E000E1B8A5 /* URLConstans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207C8AD02A80E0E000E1B8A5 /* URLConstans.swift */; };
 		5849C1E32A3F36AD002F9C63 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5849C1E22A3F36AD002F9C63 /* NetworkManager.swift */; };
 		5849C1E52A3F3B65002F9C63 /* ImagesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5849C1E42A3F3B65002F9C63 /* ImagesData.swift */; };
 		5849C1E92A3F7030002F9C63 /* FindPictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5849C1E82A3F7030002F9C63 /* FindPictureViewController.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		207C8AD02A80E0E000E1B8A5 /* URLConstans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConstans.swift; sourceTree = "<group>"; };
 		5849C1E22A3F36AD002F9C63 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		5849C1E42A3F3B65002F9C63 /* ImagesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesData.swift; sourceTree = "<group>"; };
 		5849C1E82A3F7030002F9C63 /* FindPictureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPictureViewController.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 				58FE33672A755EDE004C577D /* SortModel.swift */,
 				58FE33692A755F2E004C577D /* ImageConstants.swift */,
 				58FE338E2A764DE2004C577D /* TitleConstants.swift */,
+				207C8AD02A80E0E000E1B8A5 /* URLConstans.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -373,6 +376,7 @@
 				584F9D682A3A6FE600E9B4BF /* UIView+Extension.swift in Sources */,
 				58FE336E2A755FE6004C577D /* TextField+Extension.swift in Sources */,
 				58FE337F2A756892004C577D /* TopView.swift in Sources */,
+				207C8AD12A80E0E000E1B8A5 /* URLConstans.swift in Sources */,
 				58C3B25E2A44642C00DB2776 /* HeaderCollectionView.swift in Sources */,
 				58FE33752A756115004C577D /* NetworkErrorsEnum.swift in Sources */,
 				5849C1EC2A3F789C002F9C63 /* ImageCell.swift in Sources */,

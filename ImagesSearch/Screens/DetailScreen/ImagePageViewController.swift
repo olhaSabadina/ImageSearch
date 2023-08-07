@@ -20,7 +20,7 @@ class ImagePageViewController: UIViewController {
     var completion: ((String) -> Void)?
     var arrayImages: [ImageDescription]? = nil {
         didSet {
-            downView.bottomCollectionView.reloadData()
+            downView.bottomCollectionView?.reloadData()
         }
     }
     
@@ -168,9 +168,9 @@ class ImagePageViewController: UIViewController {
     private func setCollectionView() {
         view.addSubview(downView)
         downView.translatesAutoresizingMaskIntoConstraints = false
-        downView.bottomCollectionView.register(BottomCollectionCell.self, forCellWithReuseIdentifier: BottomCollectionCell.identCell)
-        downView.bottomCollectionView.delegate = self
-        downView.bottomCollectionView.dataSource = self
+        downView.bottomCollectionView?.register(BottomCollectionCell.self, forCellWithReuseIdentifier: BottomCollectionCell.identCell)
+        downView.bottomCollectionView?.delegate = self
+        downView.bottomCollectionView?.dataSource = self
     }
 }
 
