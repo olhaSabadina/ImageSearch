@@ -59,8 +59,8 @@ class FindPictureViewController: UIViewController {
     }
     
     @objc func pushLink(_ sender: UIButton ) {
-        let hitUrl = imagesArray?[sender.tag].largeImageURL ?? ""
-        shareFromURL(hitUrl)
+        let imageUrl = imagesArray?[sender.tag].largeImageURL ?? ""
+        shareFromURL(imageUrl)
     }
     
     @objc func backToStartVC() {

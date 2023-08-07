@@ -189,8 +189,8 @@ extension ImagePageViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? BottomCollectionCell
-        guard let newHit = cell?.imageDescription else {return}
-        imageDescription = newHit
+        guard let newImage = cell?.imageDescription else {return}
+        imageDescription = newImage
         configureView()
     }
 }

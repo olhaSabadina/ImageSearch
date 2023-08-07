@@ -115,8 +115,8 @@ extension FindPictureViewController: UICollectionViewDelegate, UICollectionViewD
             //ImageCell
             let cell = collectionView.cellForItem(at: indexPath) as? ImageCell
             
-            guard let someHit = cell?.imageToViewing else {return}
-            let imagePageVC = ImagePageViewController(someHit)
+            guard let someImage = cell?.imageToViewing else {return}
+            let imagePageVC = ImagePageViewController(someImage)
             imagePageVC.arrayImages = imagesArray
             navigationController?.pushViewController(imagePageVC, animated: true)
 
