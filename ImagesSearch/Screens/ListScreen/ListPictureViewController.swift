@@ -8,15 +8,16 @@
 import UIKit
 import SDWebImage
 
-class FindPictureViewController: UIViewController {
+class ListPictureViewController: UIViewController {
     
     private let networkManager = NetworkManager()
     
-    var imagesDescription: ImagesData? = nil
-    var collectionView : UICollectionView?
     let topView = TopView()
+    var menuSort: MenuBuilder?
+    var imagesDescription: ImagesData?
+    var collectionView : UICollectionView?
     var findImageByType: ImageType = .all
-    var sortType: SortModel = .none
+    var sortType: SortImageType = .none
     var imagesArray: [ImageDescription]? {
         didSet {
             collectionView?.reloadData()
@@ -31,6 +32,7 @@ class FindPictureViewController: UIViewController {
         setCollectionView()
         setView()
         addTapGestureToHideKeyboard()
+        setMenu()
         addTargetForButtons()
         setConstraint()
     }
@@ -45,6 +47,7 @@ class FindPictureViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.imagesDescription = imgData
                     self.imagesArray = imgData?.hits
+                    self.menuSort?.imageArray = self.imagesArray
                 }
             case .failure(_):
                 self.alertNotData()
@@ -84,9 +87,17 @@ class FindPictureViewController: UIViewController {
         present(alert, animated: true)
     }
     
+    private func setMenu() {
+        menuSort = MenuBuilder(sortType, topView)
+        menuSort?.completionArrayTypeSort = { imgData in
+            self.sortType = imgData.sortImageType
+            self.imagesArray = imgData.imagesArray
+        }
+    }
+    
     private func addTargetForButtons() {
         topView.backButton.addTarget(self, action: #selector(backToStartVC), for: .touchUpInside)
-        topView.sortedButton.menu = interactiveSortMenu()
+        topView.sortedButton.menu = menuSort?.sortingImageMenu()
     }
     
     // MARK: - Set view elemets:
@@ -102,7 +113,7 @@ class FindPictureViewController: UIViewController {
     
 //MARK: - TextFieldDelegate:
 
-extension FindPictureViewController: UITextFieldDelegate {
+extension ListPictureViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let findPicturesString = textField.text ?? ""
         findPicturesByWord(findPicturesString, findImageByType)
@@ -113,7 +124,7 @@ extension FindPictureViewController: UITextFieldDelegate {
 
 //  MARK: - SetConstraint:
 
-extension FindPictureViewController {
+extension ListPictureViewController {
     func setConstraint() {
         guard let collView = collectionView else {return}
         NSLayoutConstraint.activate([

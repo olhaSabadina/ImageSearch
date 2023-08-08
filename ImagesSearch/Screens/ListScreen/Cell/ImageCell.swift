@@ -18,7 +18,7 @@ class ImageCell: UICollectionViewCell {
     private var countLabel = UILabel()
     
     let shareButton = UIButton()
-    var sortType: SortModel = .none
+    var sortType: SortImageType = .none
     var imageToViewing: ImageDescription? = nil {
         didSet {
             setViewImage(imageToViewing, sortType)
@@ -49,7 +49,7 @@ class ImageCell: UICollectionViewCell {
         searchImage.image = nil
     }
     
-    private func setViewImage(_ hit: ImageDescription?, _ sortBy: SortModel) {
+    private func setViewImage(_ hit: ImageDescription?, _ sortBy: SortImageType) {
         let currentImageUrl = hit?.previewURL ?? ""
         guard let url = URL(string: currentImageUrl) else {return}
         searchImage.sd_setImage(with: url, placeholderImage: nil, options: [.continueInBackground, .progressiveLoad], completed: nil)

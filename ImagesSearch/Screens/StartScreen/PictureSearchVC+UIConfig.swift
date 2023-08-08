@@ -1,5 +1,5 @@
 //
-//  StartSearchVC+UIConfig.swift
+//  PictureSearchViewController+UIConfig.swift
 //  ImagesSearch
 //
 //  Created by Olya Sabadina on 2023-07-30.
@@ -9,7 +9,7 @@ import UIKit
 
 //MARK: - Set UIConfiguration & constraints:
 
-extension StartSaerchViewController {
+extension PictureSearchViewController {
     
     func configView() {
         setUpView()
@@ -17,6 +17,7 @@ extension StartSaerchViewController {
         setTitleLabel()
         setDownLabel()
         setSearchTextField()
+        setMenu()
         setImagesSearchButton()
         setRightButtonOnTextField()
         setupSearchButton()
@@ -100,7 +101,7 @@ extension StartSaerchViewController {
         let separatorImageView = UIImageView(image: ImageConstants.separator)
         separatorImageView.widthAnchor.constraint(equalToConstant: 2).isActive = true
         separatorImageView.alpha = 0.5
-        let stackView = UIStackView(arrangedSubviews: [separatorImageView,imagesSearchButton])
+        let stackView = UIStackView(arrangedSubviews: [separatorImageView,imagesTypeButton])
         stackView.axis = .horizontal
         stackView.spacing = 8
         stackView.frame = CGRect(x: 0, y: 5, width: 100, height: 30)
@@ -110,16 +111,23 @@ extension StartSaerchViewController {
         searchTextField.rightView = rightView
     }
     
+    private func setMenu() {
+        menuTypeImage = MenuBuilder(imageType, imagesTypeButton)
+        menuTypeImage?.completionTypeImage = { imgType in
+            self.imageType = imgType
+        }
+    }
+    
     private func setImagesSearchButton() {
-        imagesSearchButton.setTitle(findImageByType.labelButton, for: .normal)
-        imagesSearchButton.setTitleColor(.secondaryLabel, for: .normal)
-        imagesSearchButton.setImage(ImageConstants.chevronDown, for: .normal)
-        imagesSearchButton.titleLabel?.font = .systemFont(ofSize: 15)
-        imagesSearchButton.tintColor = .secondaryLabel
-        imagesSearchButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        imagesSearchButton.semanticContentAttribute = .forceRightToLeft
-        imagesSearchButton.menu = createMenu()
-        imagesSearchButton.showsMenuAsPrimaryAction = true
+        imagesTypeButton.setTitle(imageType.labelButton, for: .normal)
+        imagesTypeButton.setTitleColor(.secondaryLabel, for: .normal)
+        imagesTypeButton.setImage(ImageConstants.chevronDown, for: .normal)
+        imagesTypeButton.titleLabel?.font = .systemFont(ofSize: 15)
+        imagesTypeButton.tintColor = .secondaryLabel
+        imagesTypeButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        imagesTypeButton.semanticContentAttribute = .forceRightToLeft
+        imagesTypeButton.menu = menuTypeImage?.typeImageMenu()
+        imagesTypeButton.showsMenuAsPrimaryAction = true
     }
     
     private func setupSearchButton(){

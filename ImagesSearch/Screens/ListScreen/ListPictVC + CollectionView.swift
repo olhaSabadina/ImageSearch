@@ -7,18 +7,19 @@
 
 import UIKit
 
-extension FindPictureViewController {
+extension ListPictureViewController {
     
     func setCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
-        collectionView?.backgroundColor = .white
-        collectionView?.delegate = self
-        collectionView?.dataSource = self
-        collectionView?.translatesAutoresizingMaskIntoConstraints = false
-        collectionView?.register(RelatedCell.self, forCellWithReuseIdentifier: RelatedCell.identCell)
-        collectionView?.register(HeaderCollectionView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionView.headerIdentifier )
-        collectionView?.register(ImageCell.self, forCellWithReuseIdentifier: ImageCell.identCell)
-        view.addSubview(collectionView ?? UICollectionView())
+        guard let collectionView = collectionView else {return}
+        collectionView.backgroundColor = .white
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(RelatedCell.self, forCellWithReuseIdentifier: RelatedCell.identCell)
+        collectionView.register(HeaderCollectionView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionView.headerIdentifier )
+        collectionView.register(ImageCell.self, forCellWithReuseIdentifier: ImageCell.identCell)
+        view.addSubview(collectionView)
     }
     
 //  MARK: - CollectionViewLayout:
@@ -70,7 +71,7 @@ extension FindPictureViewController {
 
 //  MARK: - CollectionViewDelegate,DataSours:
 
-extension FindPictureViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension ListPictureViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         2
@@ -116,7 +117,7 @@ extension FindPictureViewController: UICollectionViewDelegate, UICollectionViewD
             let cell = collectionView.cellForItem(at: indexPath) as? ImageCell
             
             guard let someImage = cell?.imageToViewing else {return}
-            let imagePageVC = ImagePageViewController(someImage)
+            let imagePageVC = DetailPictureViewController(someImage)
             imagePageVC.arrayImages = imagesArray
             navigationController?.pushViewController(imagePageVC, animated: true)
 

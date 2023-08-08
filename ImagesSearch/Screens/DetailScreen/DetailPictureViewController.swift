@@ -8,15 +8,16 @@
 import UIKit
 import SDWebImage
 
-class ImagePageViewController: UIViewController {
+class DetailPictureViewController: UIViewController {
     
     private let networkManager = NetworkManager()
     private let previewImageView = PreviewImageView()
     private var imageDescription: ImageDescription
+    
     let topView  = TopView()
     let downView = BottomCollectionView()
-    var sortType: SortModel = .none
-    
+    var menuSort: MenuBuilder?
+    var sortType: SortImageType = .none
     var completion: ((String) -> Void)?
     var arrayImages: [ImageDescription]? = nil {
         didSet {
@@ -41,6 +42,7 @@ class ImagePageViewController: UIViewController {
         super.viewDidLoad()
         setTopView()
         setLargeImageView()
+        setMenu()
         addTargetForButton()
         addTapGestureToHideKeyboard()
         configureView()
@@ -144,12 +146,20 @@ class ImagePageViewController: UIViewController {
         previewImageView.imageView.sd_setImage(with: url, placeholderImage: nil, options: [.continueInBackground, .progressiveLoad], completed: nil)
     }
     
+    private func setMenu() {
+        menuSort = MenuBuilder(sortType, topView, arrayImages)
+        menuSort?.completionArrayTypeSort = { imgData in
+            self.sortType = imgData.sortImageType
+            self.arrayImages = imgData.imagesArray
+        }
+    }
+    
     private func addTargetForButton() {
         topView.backButton.addTarget(self, action: #selector(backToPreviousVC), for: .touchUpInside)
         previewImageView.zoomButton.addTarget(self, action: #selector(zoomImage), for: .touchUpInside)
         previewImageView.shareButton.addTarget(self, action: #selector(sharePreviewImage), for: .touchUpInside)
         previewImageView.downloadButton.addTarget(self, action: #selector(downloadImageAction), for: .touchUpInside)
-        topView.sortedButton.menu = interactiveSortMenu()
+        topView.sortedButton.menu = menuSort?.sortingImageMenu()
     }
     
     private func setTopView() {
@@ -176,7 +186,7 @@ class ImagePageViewController: UIViewController {
 
 //MARK: = UICollectionView DataSource and Delegate
 
-extension ImagePageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension DetailPictureViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         arrayImages?.count ?? 0
     }
@@ -197,7 +207,7 @@ extension ImagePageViewController: UICollectionViewDelegate, UICollectionViewDat
 
 //  MARK: - SetConstraint:
 
-extension ImagePageViewController {
+extension DetailPictureViewController {
     func setConstraint() {
         NSLayoutConstraint.activate([
             topView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -220,7 +230,7 @@ extension ImagePageViewController {
 
 //MARK: - TextFieldDelegate:
 
-extension ImagePageViewController: UITextFieldDelegate {
+extension DetailPictureViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         completion?(topView.textField.text ?? "")
         navigationController?.popViewController(animated: true)

@@ -7,17 +7,18 @@
 
 import UIKit
 
-class StartSaerchViewController: UIViewController {
+class PictureSearchViewController: UIViewController {
     
-    let backgroundImageView = UIImageView()
     let titleLabel = UILabel()
     let downLabel = UILabel()
-    let searchTextField = UITextField()
+    let imagesTypeButton = UIButton()
     let searchButton = UIButton(type: .system)
-    let imagesSearchButton = UIButton()
-    var findImageByType: ImageType = .all {
+    let searchTextField = UITextField()
+    let backgroundImageView = UIImageView()
+    var menuTypeImage: MenuBuilder?
+    var imageType: ImageType = .all {
         didSet {
-            imagesSearchButton.setTitle(findImageByType.rawValue.capitalized, for: .normal)
+            imagesTypeButton.setTitle(imageType.rawValue.capitalized, for: .normal)
         }
     }
     
@@ -36,17 +37,17 @@ class StartSaerchViewController: UIViewController {
 //MARK: - @objc func:
     
     @objc func openFindPictureVC() {
-        let findPictureVC = FindPictureViewController()
+        let findPictureVC = ListPictureViewController()
         let findWord = searchTextField.text ?? ""
-        findPictureVC.findImageByType = findImageByType
-        findPictureVC.findPicturesByWord(findWord, findImageByType)
+        findPictureVC.findImageByType = imageType
+        findPictureVC.findPicturesByWord(findWord, imageType)
         searchTextField.text = nil
         navigationController?.pushViewController(findPictureVC, animated: true)
     }
 }
 //MARK: - TextFieldDelegate:
 
-extension StartSaerchViewController: UITextFieldDelegate {
+extension PictureSearchViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         openFindPictureVC()
         view.endEditing(true)

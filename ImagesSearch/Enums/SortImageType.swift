@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-enum SortModel {
+enum SortImageType {
     case none
     case downloads
     case views
