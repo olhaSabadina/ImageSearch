@@ -11,7 +11,8 @@ import UIKit
 struct NetworkManager {
     
     func fetchData(findPictures: String, imageType: ImageType , completionhandler: @escaping (Result<ImagesData?, Error>)->Void) {
-        guard let url = URL(string: "https://pixabay.com/api/?key=37479171-8736bcdb016edb77d2e073ccc&image_type=\(imageType.rawValue)&q=\(findPictures)")
+        let urlString = imageType.fullPath + findPictures
+        guard let url = URL(string: urlString)
         else {
             completionhandler(.failure(NetworkErrors.badURL))
             return

@@ -61,4 +61,26 @@ enum ImageType: String, Codable {
             return "Vector SVG  "
         }
     }
+    
+    private var baseURL: String {
+        return "https://pixabay.com/api/?key=37479171-8736bcdb016edb77d2e073ccc"
+    }
+
+    var fullPath: String {
+        var endpoint:String
+        switch self {
+        case .all:
+            endpoint = "&image_type=all"
+        case .photo:
+            endpoint = "&image_type=photo"
+        case .illustration:
+            endpoint = "&image_type=illustration"
+        case .vectorAI:
+            endpoint = "&image_type=vectorAI"
+        case .vectorSVG:
+            endpoint = "&image_type=vector/svg"
+        }
+        
+        return baseURL + endpoint + "&q="
+    }
 }
