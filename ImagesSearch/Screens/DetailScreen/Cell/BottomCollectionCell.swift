@@ -11,7 +11,6 @@ class BottomCollectionCell: UICollectionViewCell {
 
     static var identCell = "SmallCell"
   
-//    private let networkManager = NetworkManager()
     private let previewImage = UIImageView()
    
     var imageDescription: ImageDescription? = nil {
