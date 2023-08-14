@@ -79,14 +79,15 @@ class ListPictureViewController: UIViewController {
     }
     
     private func alertNotData() {
-        let alert = UIAlertController(title: TitleConstants.noData, message: nil, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: TitleConstants.Ok, style: .default) { _ in
-            self.topView.textField.text = ""
+        presentAlertWithTitle(title: TitleConstants.noData, message: nil, options: TitleConstants.Ok, styleActionArray: [.default], alertStyle: .alert) { option in
+            switch option {
+            case 0: self.topView.textField.text = ""
+            default:
+                break
+            }
         }
-        alert.addAction(okAction)
-        present(alert, animated: true)
     }
-    
+
     private func setMenu() {
         menuSort = MenuBuilder(sortType, topView)
         menuSort?.completionArrayTypeSort = { imgData in

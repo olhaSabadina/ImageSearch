@@ -11,8 +11,7 @@ struct ImagesData: Codable {
     let total, totalHits: Int
     var hits: [ImageDescription]
     var related: [String] {
-        guard  hits.count != 0 && hits.first != nil else {return []}
-        return hits[0].tags.transformRelatedToArray()
+        return hits.first?.tags.transformRelatedToArray() ?? []
     }
 }
 

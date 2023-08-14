@@ -16,7 +16,7 @@ extension ListPictureViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(RelatedCell.self, forCellWithReuseIdentifier: RelatedCell.identCell)
+        collectionView.register(SimilarImageCell.self, forCellWithReuseIdentifier: SimilarImageCell.identCell)
         collectionView.register(HeaderCollectionView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionView.headerIdentifier )
         collectionView.register(ImageCell.self, forCellWithReuseIdentifier: ImageCell.identCell)
         view.addSubview(collectionView)
@@ -87,7 +87,7 @@ extension ListPictureViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
             //RelatedCell
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RelatedCell.identCell, for: indexPath) as? RelatedCell else {return UICollectionViewCell()}
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SimilarImageCell.identCell, for: indexPath) as? SimilarImageCell else {return UICollectionViewCell()}
             let textLabel = imagesDescription?.related[indexPath.item] ?? ""
             cell.setTextLabel(indexPath.item, textLabel: textLabel)
             return cell
@@ -107,7 +107,7 @@ extension ListPictureViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row != 0 {
             //RelatedCell
-            let cell = collectionView.cellForItem(at: indexPath) as? RelatedCell
+            let cell = collectionView.cellForItem(at: indexPath) as? SimilarImageCell
             let textLabel = cell?.labelText.text ?? ""
             topView.textField.text = textLabel
             findPicturesByWord(textLabel, findImageByType)
@@ -118,7 +118,7 @@ extension ListPictureViewController: UICollectionViewDelegate, UICollectionViewD
             
             guard let someImage = cell?.imageToViewing else {return}
             let imagePageVC = DetailPictureViewController(someImage)
-            imagePageVC.arrayImages = imagesArray
+            imagePageVC.imageDescriptionArray = imagesArray
             navigationController?.pushViewController(imagePageVC, animated: true)
 
             imagePageVC.completion = {[weak self] searchWord in

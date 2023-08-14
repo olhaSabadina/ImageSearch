@@ -15,13 +15,13 @@ class DetailPictureViewController: UIViewController {
     private var imageDescription: ImageDescription
     
     let topView  = TopView()
-    let downView = BottomCollectionView()
+    let bottomCollectionView = BottomCollectionView()
     var menuSort: MenuBuilder?
     var sortType: SortImageType = .none
     var completion: ((String) -> Void)?
-    var arrayImages: [ImageDescription]? = nil {
+    var imageDescriptionArray: [ImageDescription]? = nil {
         didSet {
-            downView.bottomCollectionView?.reloadData()
+            bottomCollectionView.bottomCollectionView?.reloadData()
         }
     }
     
@@ -100,23 +100,17 @@ class DetailPictureViewController: UIViewController {
     }
     
     private func alertDownload() {
-        let alert = UIAlertController(title: TitleConstants.chooseSize, message: nil, preferredStyle: .actionSheet)
-        let previewSizeAction = UIAlertAction(title: TitleConstants.previewSize, style: .default) { _  in
-            self.downloadImageToGallery(self.imageDescription.previewURL)
+        presentAlertWithTitle(title: TitleConstants.chooseSize, message: nil, options: TitleConstants.previewSize, TitleConstants.webSize, TitleConstants.largeSize,TitleConstants.cancel, styleActionArray: [.default, .default, .default, .destructive], alertStyle: .actionSheet) { numberButton in
+            switch numberButton {
+            case 0: self.downloadImageToGallery(self.imageDescription.previewURL)
+            case 1:
+                self.downloadImageToGallery(self.imageDescription.webformatURL)
+            case 2:
+                self.downloadImageToGallery(self.imageDescription.largeImageURL)
+            default:
+                break
+            }
         }
-        let webFormatAction = UIAlertAction(title: TitleConstants.webSize, style: .default) { _  in
-            self.downloadImageToGallery(self.imageDescription.webformatURL)
-        }
-        let largeSizeAction = UIAlertAction(title: TitleConstants.largeSize, style: .default) { _  in
-            self.downloadImageToGallery(self.imageDescription.largeImageURL)
-        }
-        let cancelAction = UIAlertAction(title: TitleConstants.cancel, style: .destructive)
-        alert.addAction(previewSizeAction)
-        alert.addAction(webFormatAction)
-        alert.addAction(largeSizeAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true)
     }
     
     private func downloadImageToGallery(_ urlSize: String) {
@@ -132,12 +126,7 @@ class DetailPictureViewController: UIViewController {
     }
     
     private func createAlert(_ title: String) {
-        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: TitleConstants.Ok, style: .default)
-        alert.addAction(okAction)
-        DispatchQueue.main.async {
-            self.present(alert, animated: true)
-        }
+        presentAlertWithTitle(title: title, message: nil, options: TitleConstants.Ok, styleActionArray: [.default], alertStyle: .alert, completion: nil)
     }
     
     private func configureView() {
@@ -147,10 +136,10 @@ class DetailPictureViewController: UIViewController {
     }
     
     private func setMenu() {
-        menuSort = MenuBuilder(sortType, topView, arrayImages)
+        menuSort = MenuBuilder(sortType, topView, imageDescriptionArray)
         menuSort?.completionArrayTypeSort = { imgData in
             self.sortType = imgData.sortImageType
-            self.arrayImages = imgData.imagesArray
+            self.imageDescriptionArray = imgData.imagesArray
         }
     }
     
@@ -176,11 +165,11 @@ class DetailPictureViewController: UIViewController {
     }
     
     private func setCollectionView() {
-        view.addSubview(downView)
-        downView.translatesAutoresizingMaskIntoConstraints = false
-        downView.bottomCollectionView?.register(BottomCollectionCell.self, forCellWithReuseIdentifier: BottomCollectionCell.identCell)
-        downView.bottomCollectionView?.delegate = self
-        downView.bottomCollectionView?.dataSource = self
+        view.addSubview(bottomCollectionView)
+        bottomCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        bottomCollectionView.bottomCollectionView?.register(BottomCollectionCell.self, forCellWithReuseIdentifier: BottomCollectionCell.identCell)
+        bottomCollectionView.bottomCollectionView?.delegate = self
+        bottomCollectionView.bottomCollectionView?.dataSource = self
     }
 }
 
@@ -188,12 +177,12 @@ class DetailPictureViewController: UIViewController {
 
 extension DetailPictureViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        arrayImages?.count ?? 0
+        imageDescriptionArray?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BottomCollectionCell.identCell, for: indexPath) as? BottomCollectionCell else {return UICollectionViewCell()}
-        cell.imageDescription = arrayImages?[indexPath.item]
+        cell.imageDescription = imageDescriptionArray?[indexPath.item]
         return cell
     }
     
@@ -220,10 +209,10 @@ extension DetailPictureViewController {
             previewImageView.leadingAnchor.constraint(equalTo: topView.leadingAnchor),
             previewImageView.trailingAnchor.constraint(equalTo: topView.trailingAnchor),
             
-            downView.topAnchor.constraint(equalTo: previewImageView.bottomAnchor),
-            downView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            downView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            downView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            bottomCollectionView.topAnchor.constraint(equalTo: previewImageView.bottomAnchor),
+            bottomCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            bottomCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            bottomCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 }

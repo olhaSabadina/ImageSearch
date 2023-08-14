@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RelatedCell: UICollectionViewCell {
+class SimilarImageCell: UICollectionViewCell {
     
     static var identCell = "worldCell"
     

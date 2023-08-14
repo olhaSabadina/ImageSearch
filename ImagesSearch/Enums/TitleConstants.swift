@@ -21,10 +21,10 @@ enum TitleConstants {
     
     //FindPicturesViewController
     static let Ok = "OK"
-    static let noData = "Sorry /n Your request is invalid"
+    static let noData = "Sorry \n Your request is invalid"
     
     //ImagePageViewController
-    static let saveToGallary = "Image saved/n to Photo Gallary"
+    static let saveToGallary = "Image saved\n to Photo Gallary"
     static let chooseSize = "Choose size for download"
     static let previewSize = "Preview size"
     static let largeSize = "Large size"
