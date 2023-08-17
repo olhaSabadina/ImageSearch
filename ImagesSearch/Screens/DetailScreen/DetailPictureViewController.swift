@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import CropViewController
 
 class DetailPictureViewController: UIViewController {
     
@@ -53,8 +54,16 @@ class DetailPictureViewController: UIViewController {
     //MARK: - @objc func:
     
     @objc func cropImage() {
-        zoomImage()
-        
+        networkManager.downloadImageFromUrl(imageDescription.largeImageURL) { result in
+            switch result {
+            case .success(let img):
+                DispatchQueue.main.async {
+                self.showCropVC(img)
+                }
+            case .failure(_):
+                print(NetworkErrors.badURLtoImage)
+            }
+        }
         
     }
     
@@ -105,6 +114,19 @@ class DetailPictureViewController: UIViewController {
         self.view.addGestureRecognizer(tapGesture)
     }
     
+    private func showCropVC(_ image: UIImage) {
+        let vc = CropViewController(croppingStyle: .default, image: image)
+        vc.aspectRatioPreset = .presetSquare
+        vc.aspectRatioLockEnabled = true
+        vc.toolbarPosition = .bottom
+        vc.doneButtonTitle = "Done"
+        vc.doneButtonColor = .systemOrange
+        vc.cancelButtonTitle = "Cancel"
+        vc.cancelButtonColor = .systemRed
+        vc.delegate = self
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     private func alertDownload() {
         presentAlertWithTitle(title: TitleConstants.chooseSize, message: nil, options: TitleConstants.previewSize, TitleConstants.webSize, TitleConstants.largeSize,TitleConstants.cancel, styleActionArray: [.default, .default, .default, .destructive], alertStyle: .actionSheet) { numberButton in
             switch numberButton {
@@ -152,7 +174,6 @@ class DetailPictureViewController: UIViewController {
     private func addTargetForButton() {
         topView.backButton.addTarget(self, action: #selector(backToPreviousVC), for: .touchUpInside)
         previewImageView.cropButton.addTarget(self, action: #selector(cropImage), for: .touchUpInside)
-        
         previewImageView.zoomButton.addTarget(self, action: #selector(zoomImage), for: .touchUpInside)
         previewImageView.shareButton.addTarget(self, action: #selector(sharePreviewImage), for: .touchUpInside)
         previewImageView.downloadButton.addTarget(self, action: #selector(downloadImageAction), for: .touchUpInside)
@@ -223,6 +244,27 @@ extension DetailPictureViewController {
             bottomCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+}
+
+//MARK: - CropDelegate:
+extension DetailPictureViewController: CropViewControllerDelegate {
+    
+    func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+                
+        let imageView = UIImageView(frame: view.frame)
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = image
+        
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.imageSaveToPhotoLibrary(_:didFinishSavingWithError:contextInfo:)), nil)
+        
+        navigationController?.popViewController(animated: true)
+    }
+    
+    
 }
 
 //MARK: - TextFieldDelegate:
