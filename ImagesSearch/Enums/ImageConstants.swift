@@ -40,4 +40,5 @@ enum ImageConstants {
     
     //LargeImageView (DetailScreen
     static let zoom = UIImage(systemName: "plus.magnifyingglass")
+    static let crop = UIImage(systemName: "crop.rotate")
 }

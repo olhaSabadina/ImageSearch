@@ -52,6 +52,12 @@ class DetailPictureViewController: UIViewController {
     
     //MARK: - @objc func:
     
+    @objc func cropImage() {
+        zoomImage()
+        
+        
+    }
+    
     @objc func zoomImage() {
         networkManager.downloadImageFromUrl(imageDescription.largeImageURL) { result in
             switch result {
@@ -145,6 +151,8 @@ class DetailPictureViewController: UIViewController {
     
     private func addTargetForButton() {
         topView.backButton.addTarget(self, action: #selector(backToPreviousVC), for: .touchUpInside)
+        previewImageView.cropButton.addTarget(self, action: #selector(cropImage), for: .touchUpInside)
+        
         previewImageView.zoomButton.addTarget(self, action: #selector(zoomImage), for: .touchUpInside)
         previewImageView.shareButton.addTarget(self, action: #selector(sharePreviewImage), for: .touchUpInside)
         previewImageView.downloadButton.addTarget(self, action: #selector(downloadImageAction), for: .touchUpInside)
