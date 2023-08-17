@@ -61,7 +61,7 @@ class DetailPictureViewController: UIViewController {
                 self.showCropVC(img)
                 }
             case .failure(_):
-                print(NetworkErrors.badURLtoImage)
+                print(ImageSearchErrors.badURLtoImage)
             }
         }
         
@@ -76,7 +76,7 @@ class DetailPictureViewController: UIViewController {
                     self.navigationController?.pushViewController(imageVC, animated: true)
                 }
             case .failure(_):
-                print(NetworkErrors.badURLtoImage)
+                print(ImageSearchErrors.badURLtoImage)
             }
         }
     }
@@ -115,14 +115,7 @@ class DetailPictureViewController: UIViewController {
     }
     
     private func showCropVC(_ image: UIImage) {
-        let vc = CropViewController(croppingStyle: .default, image: image)
-        vc.aspectRatioPreset = .presetSquare
-        vc.aspectRatioLockEnabled = true
-        vc.toolbarPosition = .bottom
-        vc.doneButtonTitle = "Done"
-        vc.doneButtonColor = .systemOrange
-        vc.cancelButtonTitle = "Cancel"
-        vc.cancelButtonColor = .systemRed
+        let vc = CropBuilder.showCropVC(image)
         vc.delegate = self
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -148,13 +141,13 @@ class DetailPictureViewController: UIViewController {
                 UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.imageSaveToPhotoLibrary(_:didFinishSavingWithError:contextInfo:)), nil)
                 
             case .failure(_):
-                print(NetworkErrors.errorDownloadImage)
+                print(ImageSearchErrors.errorDownloadImage)
             }
         }
     }
     
-    private func createAlert(_ title: String) {
-        presentAlertWithTitle(title: title, message: nil, options: TitleConstants.Ok, styleActionArray: [.default], alertStyle: .alert, completion: nil)
+    private func createAlert(_ title: String, message: String? = nil) {
+        presentAlertWithTitle(title: title, message: message, options: TitleConstants.Ok, styleActionArray: [.default], alertStyle: .alert, completion: nil)
     }
     
     private func configureView() {
@@ -254,17 +247,18 @@ extension DetailPictureViewController: CropViewControllerDelegate {
     }
     
     func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
-                
-        let imageView = UIImageView(frame: view.frame)
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = image
-        
-        UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.imageSaveToPhotoLibrary(_:didFinishSavingWithError:contextInfo:)), nil)
-        
+
+        let cropAlbum = CustomAlbum(name: TitleConstants.albumName)
+        cropAlbum.save(image: image) { result in
+            switch result {
+            case .success(_):
+                self.createAlert(TitleConstants.saveToGallary, message: "Folder named: \(TitleConstants.albumName)")
+            case .failure(let err):
+                self.createAlert("Sorry", message: err.localizedDescription)
+            }
+        }
         navigationController?.popViewController(animated: true)
     }
-    
-    
 }
 
 //MARK: - TextFieldDelegate:

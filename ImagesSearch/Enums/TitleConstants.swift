@@ -34,6 +34,7 @@ enum TitleConstants {
     //PreviewImageView (DetailScreen)
     static let download = " Download "
     static let share = "    Share "
+    static let albumName = "Crop Images"
     
     
 }

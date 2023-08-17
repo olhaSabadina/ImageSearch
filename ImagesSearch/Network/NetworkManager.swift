@@ -14,20 +14,20 @@ struct NetworkManager {
         let urlString = imageType.fullPath + findPictures
         guard let url = URL(string: urlString)
         else {
-            completionhandler(.failure(NetworkErrors.badURL))
+            completionhandler(.failure(ImageSearchErrors.badURL))
             return
         }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard error == nil, let data = data
             else {
-                completionhandler(.failure(NetworkErrors.invalidData))
+                completionhandler(.failure(ImageSearchErrors.invalidData))
                 return
             }
             
             if let response = response as? HTTPURLResponse,
                !(200...299).contains(response.statusCode) {
-                completionhandler(.failure(NetworkErrors.responseStatusCodeError))
+                completionhandler(.failure(ImageSearchErrors.responseStatusCodeError))
             }
             
             let imagesModel = self.parseJSON(data: data)
@@ -37,10 +37,10 @@ struct NetworkManager {
     
     func downloadImageFromUrl(_ url: String, completion: @escaping (Result<UIImage, Error>)->Void) {
         
-        guard let url = URL(string: url) else {completion(.failure(NetworkErrors.badURLtoImage)); return}
+        guard let url = URL(string: url) else {completion(.failure(ImageSearchErrors.badURLtoImage)); return}
         
         URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else {completion(.failure(NetworkErrors.invalidDataImage))
+            guard let data = data, error == nil else {completion(.failure(ImageSearchErrors.invalidDataImage))
                 return}
             
             if let imageFromData = UIImage(data: data) {
@@ -56,7 +56,7 @@ struct NetworkManager {
             return imageData
             
         } catch {
-            print(NetworkErrors.errorParsing)
+            print(ImageSearchErrors.errorParsing)
         }
         return nil
     }
