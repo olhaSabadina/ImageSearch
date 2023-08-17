@@ -106,7 +106,7 @@ class ListPictureViewController: UIViewController {
     private func setView() {
         navigationController?.isNavigationBarHidden = true
         view.addSubview(topView)
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         topView.translatesAutoresizingMaskIntoConstraints = false
         topView.textField.delegate = self
     }

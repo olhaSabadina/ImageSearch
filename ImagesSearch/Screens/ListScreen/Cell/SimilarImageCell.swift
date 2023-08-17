@@ -34,7 +34,7 @@ class SimilarImageCell: UICollectionViewCell {
         labelText.text = textLabel
         if indexPath != 0 {
             labelText.backgroundColor = .lightGray.withAlphaComponent(0.3)
-            labelText.textColor = .black
+            labelText.textColor = .label
         }
     }
     

@@ -1,6 +1,8 @@
 //
 //  CustomAlbum.swift
+//  ImagesSearch
 //
+//  Created by Olga Sabadina on 17.08.2023.
 //
 
 import Photos
@@ -9,7 +11,6 @@ import UIKit
 final class CustomAlbum: NSObject {
    
     var name: String
-//    static let shared = CustomAlbum()
     
     private var assetCollection: PHAssetCollection?
     

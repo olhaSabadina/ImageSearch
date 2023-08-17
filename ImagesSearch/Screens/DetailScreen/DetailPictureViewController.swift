@@ -64,7 +64,6 @@ class DetailPictureViewController: UIViewController {
                 print(ImageSearchErrors.badURLtoImage)
             }
         }
-        
     }
     
     @objc func zoomImage() {
@@ -115,7 +114,7 @@ class DetailPictureViewController: UIViewController {
     }
     
     private func showCropVC(_ image: UIImage) {
-        let vc = CropBuilder.showCropVC(image)
+        let vc = CropBuilder.createCropVC(image)
         vc.delegate = self
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -177,7 +176,7 @@ class DetailPictureViewController: UIViewController {
         topView.textField.delegate = self
         topView.translatesAutoresizingMaskIntoConstraints = false
         navigationController?.isNavigationBarHidden = true
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         view.addSubview(topView)
     }
     

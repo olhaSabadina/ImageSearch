@@ -34,7 +34,7 @@ class TopView: UIView {
     }
     
     private func setView() {
-        backgroundColor = .white
+        backgroundColor = .systemBackground
         layer.shadowOffset = .init(width: 0, height: 0.5)
         layer.shadowColor = UIColor.gray.cgColor
         layer.shadowOpacity = 0.6
@@ -78,7 +78,7 @@ class TopView: UIView {
     
     private func  setSortedButton() {
         sortedButton.setImage(ImageConstants.sorted, for: .normal)
-        sortedButton.setBorderLayer(backgroundColor: .clear, borderColor: .lightGray.withAlphaComponent(0.4), borderWidth: 1, cornerRadius: 4, tintColor: .black)
+        sortedButton.setBorderLayer(backgroundColor: .clear, borderColor: .lightGray.withAlphaComponent(0.4), borderWidth: 1, cornerRadius: 4, tintColor: .label)
         sortedButton.heightAnchor.constraint(equalTo: sortedButton.widthAnchor).isActive = true
         sortedButton.showsMenuAsPrimaryAction = true
     }
