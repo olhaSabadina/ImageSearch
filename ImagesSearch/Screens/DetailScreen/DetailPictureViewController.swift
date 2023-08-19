@@ -54,30 +54,38 @@ class DetailPictureViewController: UIViewController {
     //MARK: - @objc func:
     
     @objc func cropImage() {
+        var image = UIImage()
+        let group = DispatchGroup()
+        group.enter()
         networkManager.downloadImageFromUrl(imageDescription.largeImageURL) { result in
             switch result {
             case .success(let img):
-                DispatchQueue.main.async {
-                self.showCropVC(img)
-                }
+                image = img
+                group.leave()
             case .failure(_):
                 print(ImageSearchErrors.badURLtoImage)
             }
         }
+        group.wait()
+        showCropVC(image)
     }
     
     @objc func zoomImage() {
+        var image = UIImage()
+        let group = DispatchGroup()
+        group.enter()
         networkManager.downloadImageFromUrl(imageDescription.largeImageURL) { result in
             switch result {
             case .success(let img):
-                DispatchQueue.main.async {
-                    let imageVC = ZoomImageViewController(img)
-                    self.navigationController?.pushViewController(imageVC, animated: true)
-                }
+                image = img
+                group.leave()
             case .failure(_):
                 print(ImageSearchErrors.badURLtoImage)
             }
         }
+        group.wait()
+        let imageVC = ZoomImageViewController(image)
+        self.navigationController?.pushViewController(imageVC, animated: true)
     }
     
     @objc func sharePreviewImage() {
@@ -246,7 +254,7 @@ extension DetailPictureViewController: CropViewControllerDelegate {
     }
     
     func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
-
+        
         let cropAlbum = CustomAlbum(name: TitleConstants.albumName)
         cropAlbum.save(image: image) { result in
             switch result {
