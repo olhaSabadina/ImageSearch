@@ -11,6 +11,7 @@ import UIKit
 enum ImageConstants {
     
     static let magnifyingglass  = UIImage(systemName: "magnifyingglass")
+    static let selectButton = UIImage(systemName: "checkmark.square")
     static let sorted = UIImage(systemName: "slider.horizontal.3")
     
     //Menu Images
@@ -40,4 +41,5 @@ enum ImageConstants {
     
     //LargeImageView (DetailScreen
     static let zoom = UIImage(systemName: "plus.magnifyingglass")
+    static let crop = UIImage(systemName: "crop.rotate")
 }

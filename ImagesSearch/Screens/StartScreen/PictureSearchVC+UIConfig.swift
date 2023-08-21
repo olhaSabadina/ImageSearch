@@ -20,7 +20,7 @@ extension PictureSearchViewController {
         setMenu()
         setImagesSearchButton()
         setRightButtonOnTextField()
-        setupSearchButton()
+        configureButtons()
     }
     
     func setConstraints() {
@@ -45,6 +45,11 @@ extension PictureSearchViewController {
             searchButton.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             searchButton.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             searchButton.topAnchor.constraint(lessThanOrEqualTo: searchTextField.bottomAnchor, constant: 30),
+            
+            selectFotoFromGalleryButton.heightAnchor.constraint(equalToConstant: 50),
+            selectFotoFromGalleryButton.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            selectFotoFromGalleryButton.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+            selectFotoFromGalleryButton.topAnchor.constraint(lessThanOrEqualTo: searchButton.bottomAnchor, constant: 15),
             
             downLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             downLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
@@ -130,14 +135,23 @@ extension PictureSearchViewController {
         imagesTypeButton.showsMenuAsPrimaryAction = true
     }
     
-    private func setupSearchButton(){
-        searchButton.setTitle("  Search", for: .normal)
-        searchButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        searchButton.setImage(ImageConstants.magnifyingglass, for: .normal)
-        searchButton.setTitleColor(.white, for: .normal)
-        searchButton.setBorderLayer(backgroundColor: .blue, borderColor: .black, borderWidth: 1, cornerRadius: 8, tintColor: .white)
+    private func createButton(title: String, image: UIImage?) -> UIButton {
+        let button = UIButton(type: .system)
+        button.setTitle(title, for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 18)
+        button.setImage(image, for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setBorderLayer(backgroundColor: .systemBlue, borderColor: .black, borderWidth: 1, cornerRadius: 8, tintColor: .white)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(button)
+        return button
+    }
+    
+    private func configureButtons(){
+        searchButton = createButton(title: TitleConstants.searchButton, image: ImageConstants.magnifyingglass)
+        selectFotoFromGalleryButton = createButton(title: TitleConstants.searchFotoFromGalery, image: ImageConstants.selectButton)
+        
         searchButton.addTarget(self, action: #selector(openFindPictureVC), for: .touchUpInside)
-        searchButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(searchButton)
+        selectFotoFromGalleryButton.addTarget(self, action: #selector(openPickerController), for: .touchUpInside)
     }
 }

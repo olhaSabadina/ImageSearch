@@ -1,5 +1,5 @@
 //
-//  NetworkErrorsEnum.swift
+//  ImageSearchErrors.swift
 //  ImagesSearch
 //
 //  Created by Olya Sabadina on 2023-07-18.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum NetworkErrors: Error {
+public enum ImageSearchErrors: Error {
     case errorReturnCell
     case badURL
     case invalidData
@@ -16,4 +16,5 @@ public enum NetworkErrors: Error {
     case errorParsing
     case errorDownloadImage
     case responseStatusCodeError
+    case notAutorized
 }

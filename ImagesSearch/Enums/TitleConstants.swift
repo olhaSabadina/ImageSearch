@@ -17,6 +17,8 @@ enum TitleConstants {
     static let mainScreenTop = "Send your audience\n on a visual adventure"
     static let mainScreenDown = "Photo by Free-Photos"
     static let placeholderTextField = " search "
+    static let searchButton = "  Search"
+    static let searchFotoFromGalery = "  Select from gallery"
     static let menuTitle = "Select Image Type"
     
     //FindPicturesViewController
@@ -34,6 +36,7 @@ enum TitleConstants {
     //PreviewImageView (DetailScreen)
     static let download = " Download "
     static let share = "    Share "
+    static let albumName = "Crop Images"
     
     
 }

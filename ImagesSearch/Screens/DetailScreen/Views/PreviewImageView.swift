@@ -11,6 +11,7 @@ class PreviewImageView: UIView {
 
     let imageView = UIImageView()
     let zoomButton = UIButton(type: .system)
+    let cropButton = UIButton(type: .system)
     let downloadButton = UIButton(type: .system)
     let shareButton = UIButton(type: .system)
     
@@ -28,6 +29,7 @@ class PreviewImageView: UIView {
         setFormatPhotoLabel()
         setShareButton()
         setZoomButton()
+        setCropButton()
         setDownloadButton()
     }
     
@@ -111,6 +113,17 @@ class PreviewImageView: UIView {
         addSubview(zoomButton)
     }
     
+    private func setCropButton() {
+        cropButton.setImage(ImageConstants.crop, for: .normal)
+        cropButton.translatesAutoresizingMaskIntoConstraints = false
+        cropButton.setBorderLayer(backgroundColor: .init(cgColor: .init(red: 226, green: 226, blue: 226, alpha: 1)),
+                       borderColor: .darkGray,
+                       borderWidth: 1,
+                       cornerRadius: 4,
+                       tintColor: .systemIndigo)
+        addSubview(cropButton)
+    }
+    
     private func setDownloadButton() {
         downloadButton.setTitle(TitleConstants.download, for: .normal)
         downloadButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
@@ -132,6 +145,11 @@ class PreviewImageView: UIView {
             mainStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             mainStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             mainStack.bottomAnchor.constraint(equalTo: downloadButton.topAnchor, constant: -15),
+            
+            cropButton.heightAnchor.constraint(equalToConstant: 35),
+            cropButton.widthAnchor.constraint(equalTo: cropButton.heightAnchor),
+            cropButton.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -20),
+            cropButton.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 15),
             
             zoomButton.heightAnchor.constraint(equalToConstant: 35),
             zoomButton.widthAnchor.constraint(equalTo: zoomButton.heightAnchor),
