@@ -10,7 +10,6 @@
 		201C93DB2A87819800B9ED2A /* ViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201C93DA2A87819800B9ED2A /* ViewController+Alert.swift */; };
 		2042396F2A82239400A887B9 /* MenuBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2042396E2A82239400A887B9 /* MenuBuilder.swift */; };
 		204239712A8223F900A887B9 /* ImagesTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204239702A8223F900A887B9 /* ImagesTypeModel.swift */; };
-		20793C9C2A8E101B00064821 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 20793C9B2A8E101B00064821 /* CropViewController */; };
 		5849C1E32A3F36AD002F9C63 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5849C1E22A3F36AD002F9C63 /* NetworkManager.swift */; };
 		5849C1E52A3F3B65002F9C63 /* ImagesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5849C1E42A3F3B65002F9C63 /* ImagesData.swift */; };
 		5849C1E92A3F7030002F9C63 /* ListPictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5849C1E82A3F7030002F9C63 /* ListPictureViewController.swift */; };
@@ -41,6 +40,9 @@
 		58FE338F2A764DE2004C577D /* TitleConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE338E2A764DE2004C577D /* TitleConstants.swift */; };
 		58FE33932A76BC4B004C577D /* PictureSearchVC+UIConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE33922A76BC4B004C577D /* PictureSearchVC+UIConfig.swift */; };
 		58FE33972A76C257004C577D /* ListPictVC + CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE33962A76C257004C577D /* ListPictVC + CollectionView.swift */; };
+		9C40076E2A965DF000A1295F /* ffff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C40076D2A965DF000A1295F /* ffff.swift */; };
+		9C4007712A966AA000A1295F /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 9C4007702A966AA000A1295F /* CropViewController */; };
+		9C4007732A966AA000A1295F /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 9C4007722A966AA000A1295F /* TOCropViewController */; };
 		9C5AF2932A8E35DA0010AFD0 /* CustomAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5AF2922A8E35DA0010AFD0 /* CustomAlbum.swift */; };
 		9C5AF2972A8E42790010AFD0 /* CropBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5AF2962A8E42790010AFD0 /* CropBuilder.swift */; };
 /* End PBXBuildFile section */
@@ -80,6 +82,7 @@
 		58FE338E2A764DE2004C577D /* TitleConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleConstants.swift; sourceTree = "<group>"; };
 		58FE33922A76BC4B004C577D /* PictureSearchVC+UIConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PictureSearchVC+UIConfig.swift"; sourceTree = "<group>"; };
 		58FE33962A76C257004C577D /* ListPictVC + CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListPictVC + CollectionView.swift"; sourceTree = "<group>"; };
+		9C40076D2A965DF000A1295F /* ffff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ffff.swift; sourceTree = "<group>"; };
 		9C5AF2922A8E35DA0010AFD0 /* CustomAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlbum.swift; sourceTree = "<group>"; };
 		9C5AF2962A8E42790010AFD0 /* CropBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,7 +93,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				58AC38AC2A779AFC00D47006 /* SDWebImage in Frameworks */,
-				20793C9C2A8E101B00064821 /* CropViewController in Frameworks */,
+				9C4007732A966AA000A1295F /* TOCropViewController in Frameworks */,
+				9C4007712A966AA000A1295F /* CropViewController in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +213,7 @@
 				58FE33692A755F2E004C577D /* ImageConstants.swift */,
 				58FE338E2A764DE2004C577D /* TitleConstants.swift */,
 				58FE33742A756115004C577D /* ImageSearchErrors.swift */,
+				9C40076D2A965DF000A1295F /* ffff.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -309,7 +314,8 @@
 			name = ImagesSearch;
 			packageProductDependencies = (
 				58AC38AB2A779AFC00D47006 /* SDWebImage */,
-				20793C9B2A8E101B00064821 /* CropViewController */,
+				9C4007702A966AA000A1295F /* CropViewController */,
+				9C4007722A966AA000A1295F /* TOCropViewController */,
 			);
 			productName = ImagesSearch;
 			productReference = 584F9D4D2A3A4CA300E9B4BF /* ImagesSearch.app */;
@@ -341,7 +347,7 @@
 			mainGroup = 584F9D442A3A4CA300E9B4BF;
 			packageReferences = (
 				58AC38AA2A779AFC00D47006 /* XCRemoteSwiftPackageReference "SDWebImage" */,
-				20793C9A2A8E101B00064821 /* XCRemoteSwiftPackageReference "TOCropViewController" */,
+				9C40076F2A966AA000A1295F /* XCRemoteSwiftPackageReference "TOCropViewController" */,
 			);
 			productRefGroup = 584F9D4E2A3A4CA300E9B4BF /* Products */;
 			projectDirPath = "";
@@ -386,6 +392,7 @@
 				58FE336C2A755F96004C577D /* PaddedLabel.swift in Sources */,
 				58FE336A2A755F2E004C577D /* ImageConstants.swift in Sources */,
 				584F9D552A3A4CA300E9B4BF /* PictureSearchViewController.swift in Sources */,
+				9C40076E2A965DF000A1295F /* ffff.swift in Sources */,
 				584F9D512A3A4CA300E9B4BF /* AppDelegate.swift in Sources */,
 				58C3B2602A44648900DB2776 /* SimilarImageCell.swift in Sources */,
 				584F9D682A3A6FE600E9B4BF /* UIView+Extension.swift in Sources */,
@@ -616,14 +623,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		20793C9A2A8E101B00064821 /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/TimOliver/TOCropViewController.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
 		58AC38AA2A779AFC00D47006 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
@@ -632,18 +631,31 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		9C40076F2A966AA000A1295F /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yuraSud/TOCropViewController.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		20793C9B2A8E101B00064821 /* CropViewController */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 20793C9A2A8E101B00064821 /* XCRemoteSwiftPackageReference "TOCropViewController" */;
-			productName = CropViewController;
-		};
 		58AC38AB2A779AFC00D47006 /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 58AC38AA2A779AFC00D47006 /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImage;
+		};
+		9C4007702A966AA000A1295F /* CropViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9C40076F2A966AA000A1295F /* XCRemoteSwiftPackageReference "TOCropViewController" */;
+			productName = CropViewController;
+		};
+		9C4007722A966AA000A1295F /* TOCropViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9C40076F2A966AA000A1295F /* XCRemoteSwiftPackageReference "TOCropViewController" */;
+			productName = TOCropViewController;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
