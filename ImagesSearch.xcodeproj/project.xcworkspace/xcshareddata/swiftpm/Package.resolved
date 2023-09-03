@@ -12,10 +12,10 @@
     {
       "identity" : "tocropviewcontroller",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/yuraSud/TOCropViewController.git",
+      "location" : "https://github.com/olhaSabadina/TOCropViewController",
       "state" : {
         "branch" : "main",
-        "revision" : "0e6f787c1b714c7f338c2397989519351926a5ef"
+        "revision" : "105f6d2d2d213c05b9179a8d34256e964baac612"
       }
     }
   ],
