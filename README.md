@@ -1,6 +1,7 @@
 # Image Search App
-Program for viewing statistics of enemy losses in equipment and manpower.
-The user has the ability to choose the date the statistics are displayed.
+A program for viewing pictures from the network and your own photo gallery 
+with the possibility of cropping them and saving the processed files to 
+a crop folder in the gallery.
 
 ## Content
 - [Technologies](#technologies)
@@ -16,19 +17,28 @@ The user has the ability to choose the date the statistics are displayed.
 - WebKit
 - MVC
 - Without storyboard
-- JSON 
-- Table and CollectionViews
+- JSON
+- SPM TOCropViewController
+- Customize TOCropViewController
+- CollectionViews
 
 ## Additionally
-As an addition, the ability to select the date for displaying statistics has been added. To do this, click on the date on the first screen at the top of the screen. (as in the screenshot below)
+As an addition, a crop was customized to save the visual continuation of the project 
+with the ability to select a new image from any of the application screens. 
+Saving the processed files to a crop folder in the gallery.
+(as in the screenshot below)
 
-<img src="./Screenshot/1.png" alt="drawing" width="200"/> <img src="./Screenshot/5.png" alt="drawing" width="200"/>
+<img src="./Screenshot/8.png" alt="drawing" width="200"/> <img src="./Screenshot/9.png" alt="drawing" width="200"/> 
+
+It is also possible to view the selected image in the maximum resolution.(as in the screenshot below)
+
+ <img src="./Screenshot/7.png" alt="drawing" width="600"/>
 
 ## Screenshots:
 
-<img src="./Screenshot/2.png" alt="drawing" width="200"/> <img src="./Screenshot/3.png" alt="drawing" width="200"/><img src="./Screenshot/6.png" alt="drawing" width="200"/> 
+<img src="./Screenshot/2.png" alt="drawing" width="200"/> <img src="./Screenshot/3.png" alt="drawing" width="200"/>  
 
-<img src="./Screenshot/4.png" alt="drawing" width="200"/>  <img src="./Screenshot/8.png" alt="drawing" width="200"/><img src="./Screenshot/7.png" alt="drawing" width="200"/> 
+<img src="./Screenshot/4.png" alt="drawing" width="200"/> <img src="./Screenshot/6.png" alt="drawing" width="200"/> 
 
 ## Contributing
 If you find a bug or remark in the code or when the program is running, please email me:
@@ -37,6 +47,5 @@ If you find a bug or remark in the code or when the program is running, please e
 
 ### Why did I write this project?
 ___
-There is a war going on in our country and every loss of an enemy brings our victory closer.
-I wrote this project with the help of the knowledge gained during the course on [Foxminded](https://foxminded.ua) по Swift
+This app was developed with the help of the knowledge gained during the mentoring course on [Foxminded](https://foxminded.ua)  Swift
 
