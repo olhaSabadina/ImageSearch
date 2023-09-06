@@ -13,13 +13,16 @@ class CropBuilder {
     static func createCropVC(_ image: UIImage) ->  CropViewController {
         
         let vc = CropViewController(croppingStyle: .default, image: image)
-        vc.aspectRatioPreset = .presetSquare
-        vc.aspectRatioLockEnabled = true
-        vc.toolbarPosition = .bottom
+        vc.cropView.backgroundColor = .white
+        vc.aspectRatioPreset = .preset16x9
+        vc.cropView.alwaysShowCroppingGrid = true
+        vc.cropView.gridOverlayHidden = false
+        vc.cropView.translucencyAlwaysHidden = true
+        vc.cropView.gridOverlayView.backgroundColor = .white.withAlphaComponent(0.3)
         vc.doneButtonTitle = "Save"
+        vc.toolbarPosition = .bottom
         vc.cancelButtonTitle = "Cancel"
-        vc.doneButtonColor = .systemOrange
-        vc.cancelButtonColor = .systemRed
+        vc.aspectRatioPickerButtonHidden = true
         return vc
     }
 }

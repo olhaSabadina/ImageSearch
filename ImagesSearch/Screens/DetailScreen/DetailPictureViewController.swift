@@ -16,6 +16,7 @@ class DetailPictureViewController: UIViewController {
     private var imageDescription: ImageDescription
     
     let topView  = TopView()
+    let cropTopView = TopView()
     let bottomCollectionView = BottomCollectionView()
     var menuSort: MenuBuilder?
     var sortType: SortImageType = .none
@@ -122,9 +123,12 @@ class DetailPictureViewController: UIViewController {
     }
     
     private func showCropVC(_ image: UIImage) {
-        let vc = CropBuilder.createCropVC(image)
-        vc.delegate = self
-        navigationController?.pushViewController(vc, animated: true)
+        let cropVC = CropBuilder.createCropVC(image)
+        cropVC.delegate = self
+        cropVC.myView = cropTopView
+        cropTopView.textField.delegate = self
+        cropTopView.backButton.addTarget(self, action: #selector(backToPreviousVC), for: .touchUpInside)
+        navigationController?.pushViewController(cropVC, animated: true)
     }
     
     private func alertDownload() {
@@ -272,8 +276,16 @@ extension DetailPictureViewController: CropViewControllerDelegate {
 
 extension DetailPictureViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        completion?(topView.textField.text ?? "")
-        navigationController?.popViewController(animated: true)
+        var textSearch = ""
+        if let textone = topView.textField.text, textone != "" {
+           textSearch = textone
+        } else if let textNew = cropTopView.textField.text {
+            textSearch = textNew
+        }
+        print(textSearch)
+        completion?(textSearch)
+        guard let listVC = navigationController?.viewControllers.first(where: { $0.isKind(of: ListPictureViewController.self)}) as? ListPictureViewController else {return true}
+        navigationController?.popToViewController(listVC, animated: true)
         view.endEditing(true)
         return true
     }

@@ -73,11 +73,10 @@ extension PictureSearchViewController: UIImagePickerControllerDelegate, UINaviga
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.originalImage] as? UIImage else { return }
-        
         let cropVC = CropBuilder.createCropVC(image)
         cropVC.delegate = self
-        navigationController?.pushViewController(cropVC, animated: true)
         picker.dismiss(animated: true)
+        navigationController?.pushViewController(cropVC, animated: true)
     }
 }
     
