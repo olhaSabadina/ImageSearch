@@ -1,5 +1,5 @@
 # Image Search App
-A program for viewing pictures from the network and your own photo gallery 
+A program for searching and viewing pictures from the network and your own photo gallery 
 with the possibility of cropping them and saving the processed files to 
 a crop folder in the gallery.
 
@@ -19,7 +19,7 @@ a crop folder in the gallery.
 - Without storyboard
 - JSON
 - SPM TOCropViewController
-- Customize TOCropViewController
+- Fork (Customize TOCropViewController)
 - CollectionViews
 
 ## Additionally
@@ -28,7 +28,7 @@ with the ability to select a new image from any of the application screens.
 Saving the processed files to a crop folder in the gallery.
 (as in the screenshot below)
 
-<img src="./Screenshot/8.png" alt="drawing" width="200"/> <img src="./Screenshot/9.png" alt="drawing" width="200"/> 
+<img src="./Screenshot/8.png" alt="drawing" width="200"/> <img src="./Screenshot/9.png" alt="drawing" width="200"/> <img src="./Screenshot/10.png" alt="drawing" width="200"/>
 
 It is also possible to view the selected image in the maximum resolution.(as in the screenshot below)
 
